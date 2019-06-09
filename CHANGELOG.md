@@ -44,7 +44,8 @@ If you enjoy Puppy Reinforcement, please consider supporting my work on Patreon,
 
 - Initial release of Puppy Reinforcement
 
-[Unreleased]: https://github.com/glutanimate/puppy-reinforcement/compare/v0.0.0...HEAD
+[Unreleased]: https://github.com/glutanimate/puppy-reinforcement/compare/v0.2.0-alpha.1...HEAD
+[0.2.0-alpha.1]: https://github.com/glutanimate/puppy-reinforcement/releases/tag/v0.2.0-alpha.1
 
 -----
 
