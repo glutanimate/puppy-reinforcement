@@ -16,7 +16,7 @@ If you enjoy Puppy Reinforcement, please consider supporting my work on Patreon,
 
 ### Added
 
-- Anki 2.1 compatibility (thanks to @zjosua for his help with this!)
+- Anki 2.1 compatibility (thanks to [@zjosua](https://github.com/zjosua) for his help with this!, #77)
 
 ### Changed
 

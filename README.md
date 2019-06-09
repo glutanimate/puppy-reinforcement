@@ -1,4 +1,4 @@
-<p align="center"><img src="screenshots/screenshot.png" height=300></p>
+<p align="center"><img src="screenshots/screenshot.png" height=500></p>
 
 <h2 align="center">Puppy Reinforcement for Anki</h2>
 
@@ -12,7 +12,7 @@
 <a title="Follow me on Twitter" href="https://twitter.com/intent/user?screen_name=glutanimate"><img src="https://img.shields.io/twitter/follow/glutanimate.svg"></a>
 </p>
 
-> Everything is better with puppies!
+> Everything's better with puppies!
 
 An add-on for the spaced-repetition flashcard app [Anki](https://apps.ankiweb.net/) that encourages learners with pictures of cute puppies, following the principles of intermittent positive reinforcement.
 
@@ -31,7 +31,7 @@ An add-on for the spaced-repetition flashcard app [Anki](https://apps.ankiweb.ne
 
 ###  Video
 
-The customization and use of the Puppy Reinforcement add-on is demonstrated in the following video (alongside other similar add-ons):
+A quick demo of the add-on (alongside other similar add-ons related to gamification):
 
 [![YouTube: Anki add-on guide: Gamify Your Reviews](https://i.ytimg.com/vi/UkveLkAgXiM/mqdefault.jpg)](https://youtu.be/UkveLkAgXiM)
 
