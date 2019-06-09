@@ -12,6 +12,10 @@ If you enjoy Puppy Reinforcement, please consider supporting my work on Patreon,
 
 ## [Unreleased]
 
+## [0.2.0-alpha.1] - 2019-06-09
+
+### [Download](https://github.com/glutanimate/puppy-reinforcement/releases/tag/v0.2.0-alpha.1)
+
 **Important note**: As this release completely overhauls the add-on structure, you will have to uninstall any existing versions of the add-on before updating. Otherwise you might end up with duplicate versions of the add-on that would interfere with each other. *If you have customized the add-on with your own pictures or other adjustments, please make sure to back them up before deleting the old version!*
 
 ### Added
