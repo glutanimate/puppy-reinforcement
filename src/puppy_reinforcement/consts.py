@@ -33,14 +33,33 @@
 Addon-wide constants
 """
 
-import sys
-import os
-from anki import version
+from __future__ import (absolute_import, division,
+                        print_function, unicode_literals)
 
-anki21 = version.startswith("2.1.")
-sys_encoding = sys.getfilesystemencoding()
+from ._version import __version__
 
-if anki21:
-    addon_path = os.path.dirname(__file__)
-else:
-    addon_path = os.path.dirname(__file__).decode(sys_encoding)
+__all__ = [
+    "ADDON_NAME", "ADDON_ID", "ADDON_VERSION", "LINKS",
+    "LICENSE", "LIBRARIES", "AUTHORS", "CONTRIBUTORS",
+    "SPONSORS"
+]
+
+# ADD-ON
+
+ADDON_NAME = "Puppy Reinforcement"
+ADDON_ID = "1722658993"
+ADDON_VERSION = __version__
+LINKS = {
+    "help": ""
+}
+LICENSE = "GNU AGPLv3"
+LIBRARIES = []
+AUTHORS = [
+    {"name": "Aristotelis P. (Glutanimate", "years": "2016-2019",
+     "contact": "https://glutanimate.com"}
+]
+# automatically sorted:
+CONTRIBUTORS = [
+    "zjosua"
+]
+SPONSORS = []

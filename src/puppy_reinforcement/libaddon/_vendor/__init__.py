@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Puppy Reinforcement Add-on for Anki
+# Libaddon for Anki
 #
-# Copyright (C) 2016-2019  Aristotelis P. <https://glutanimate.com/>
+# Copyright (C) 2018-2019  Aristotelis P. <https//glutanimate.com/>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -30,14 +30,19 @@
 # Any modifications to this file must keep this entire header intact.
 
 """
-Handles add-on configuration
+Vendorized third-party packages
 """
 
-from __future__ import (absolute_import, division,
-                        print_function, unicode_literals)
+from ..packaging import VersionSpecificImporter
 
-from aqt import mw
+# New vendored packages should be appended here:
+names = [
+    "packaging",
+    "markdown2"
+]
 
-from .libaddon.anki.configmanager import ConfigManager
+# NOTE: VersionSpecificImporter does not resolve absolute imports within
+# vendored packages. These will still need to be updated manually if
+# necessary
 
-config = ConfigManager(mw)
+VersionSpecificImporter(__name__, managed_imports=names).install()

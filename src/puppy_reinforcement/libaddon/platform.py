@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Puppy Reinforcement Add-on for Anki
+# Libaddon for Anki
 #
-# Copyright (C) 2016-2019  Aristotelis P. <https://glutanimate.com/>
+# Copyright (C) 2018-2019  Aristotelis P. <https//glutanimate.com/>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -30,14 +30,44 @@
 # Any modifications to this file must keep this entire header intact.
 
 """
-Handles add-on configuration
+Constants providing information on current system and Anki platform
 """
 
 from __future__ import (absolute_import, division,
                         print_function, unicode_literals)
 
+import sys
+import os
 from aqt import mw
+from anki import version
+from anki.utils import isMac, isWin
 
-from .libaddon.anki.configmanager import ConfigManager
+__all__ = ["PYTHON3", "ANKI20", "SYS_ENCODING", "MODULE_ADDON",
+           "MODULE_LIBADDON", "DIRECTORY_ADDONS", "JSPY_BRIDGE",
+           "PATH_ADDON", "PATH_USERFILES", "PLATFORM"]
 
-config = ConfigManager(mw)
+PYTHON3 = sys.version_info[0] == 3
+ANKI20 = version.startswith("2.0.")
+SYS_ENCODING = sys.getfilesystemencoding()
+
+name_components = __name__.split(".")
+
+MODULE_ADDON = name_components[0]
+MODULE_LIBADDON = name_components[1]
+
+if ANKI20:
+    DIRECTORY_ADDONS = mw.pm.addonFolder()
+    JSPY_BRIDGE = "py.link"
+else:
+    DIRECTORY_ADDONS = mw.addonManager.addonsFolder()
+    JSPY_BRIDGE = "pycmd"
+
+PATH_ADDON = os.path.join(DIRECTORY_ADDONS, MODULE_ADDON)
+PATH_USERFILES = os.path.join(PATH_ADDON, "user_files")
+
+if isMac:
+    PLATFORM = "mac"
+elif isWin:
+    PLATFORM = "win"
+else:
+    PLATFORM = "lin"

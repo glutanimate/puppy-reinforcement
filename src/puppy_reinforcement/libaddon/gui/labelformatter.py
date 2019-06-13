@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Puppy Reinforcement Add-on for Anki
+# Libaddon for Anki
 #
-# Copyright (C) 2016-2019  Aristotelis P. <https://glutanimate.com/>
+# Copyright (C) 2018-2019  Aristotelis P. <https//glutanimate.com/>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -30,14 +30,33 @@
 # Any modifications to this file must keep this entire header intact.
 
 """
-Handles add-on configuration
+Utilities to fill out predefined data in dialog text labels
 """
 
 from __future__ import (absolute_import, division,
                         print_function, unicode_literals)
 
-from aqt import mw
+from aqt.qt import *
 
-from .libaddon.anki.configmanager import ConfigManager
+from ..consts import ADDON_NAME, ADDON_VERSION
+from ..platform import ANKI20
 
-config = ConfigManager(mw)
+format_dict = {
+    "ADDON_NAME": ADDON_NAME,
+    "ADDON_VERSION": ADDON_VERSION,
+}
+
+if not ANKI20:
+    fmt_find_params = ((QLabel, QPushButton), QRegExp(".*"),
+                       Qt.FindChildrenRecursively)
+else:
+    # Qt4: recursive by default. No third param.
+    fmt_find_params = ((QLabel, QPushButton), QRegExp(".*"))
+
+
+def formatLabels(dialog, linkhandler=None):
+    for widget in dialog.findChildren(*fmt_find_params):
+        if widget.objectName().startswith("fmt"):
+            widget.setText(widget.text().format(**format_dict))
+        if linkhandler and isinstance(widget, QLabel):
+            widget.linkActivated.connect(linkhandler)

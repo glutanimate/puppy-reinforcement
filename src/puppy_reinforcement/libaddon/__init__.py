@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Puppy Reinforcement Add-on for Anki
+# Libaddon for Anki
 #
-# Copyright (C) 2016-2019  Aristotelis P. <https://glutanimate.com/>
+# Copyright (C) 2018-2019  Aristotelis P. <https//glutanimate.com/>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -30,14 +30,22 @@
 # Any modifications to this file must keep this entire header intact.
 
 """
-Handles add-on configuration
+Libaddon: A helper library for Anki add-on development
+
+Provides access to a number of commonly used modules shared across
+many of my add-ons.
+
+Please note that this package is not fit for general use yet, as it is
+still is too specific to my own add-ons and implementations.
+
+This module is the package entry-point.
 """
 
 from __future__ import (absolute_import, division,
                         print_function, unicode_literals)
 
-from aqt import mw
+from ._version import __version__  # noqa: F401
 
-from .libaddon.anki.configmanager import ConfigManager
-
-config = ConfigManager(mw)
+__all__ = [
+    "__version__"
+]

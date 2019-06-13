@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Puppy Reinforcement Add-on for Anki
+# Libaddon for Anki
 #
-# Copyright (C) 2016-2019  Aristotelis P. <https://glutanimate.com/>
+# Copyright (C) 2018-2019  Aristotelis P. <https//glutanimate.com/>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -30,14 +30,41 @@
 # Any modifications to this file must keep this entire header intact.
 
 """
-Handles add-on configuration
+Custom color-chooser
 """
 
 from __future__ import (absolute_import, division,
                         print_function, unicode_literals)
 
-from aqt import mw
+from .qt import QPushButton, QColorDialog, QPixmap, QColor, QIcon, QSize
 
-from .libaddon.anki.configmanager import ConfigManager
+class QColorButton(QPushButton):
+    def __init__(self, parent=None, color="#000000"):
+        super(QColorButton, self).__init__(parent=parent)
+        self._updateButtonColor(color)
+        self.clicked.connect(self._chooseColor)
 
-config = ConfigManager(mw)
+    def _chooseColor(self):
+        qcolour = QColor(self.color)
+        dialog = QColorDialog(qcolour, parent=self)
+        color = dialog.getColor()
+        if not color.isValid():
+            return False
+        color = color.name()
+        self._updateButtonColor(color)
+
+    def _updateButtonColor(self, color):
+        """Generate color preview pixmap and place it on button"""
+        pixmap = QPixmap(128, 18)
+        qcolour = QColor(0, 0, 0)
+        qcolour.setNamedColor(color)
+        pixmap.fill(qcolour)
+        self.setIcon(QIcon(pixmap))
+        self.setIconSize(QSize(128, 18))
+        self.color = color
+    
+    def color(self):
+        return self.color
+    
+    def setColor(self, color):
+        self._updateButtonColor(color)

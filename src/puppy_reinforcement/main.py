@@ -41,13 +41,13 @@ from aqt import mw
 from aqt.qt import *
 from anki.hooks import addHook
 
-from .config import local_conf
+from .config import config
 
 mw.dogs = {
     "cnt": 0,
     "last": 0,
     "enc": None,
-    "ivl": local_conf["encourage_every"]
+    "ivl": config["local"]["encourage_every"]
 }
 
 addon_path = os.path.dirname(__file__)
@@ -59,7 +59,7 @@ _tooltipTimer = None
 _tooltipLabel = None
 
 def dogTooltip(msg, image=":/icons/help-hint.png",
-               period=local_conf["duration"], parent=None):
+               period=config["local"]["duration"], parent=None):
     global _tooltipTimer, _tooltipLabel
     class CustomLabel(QLabel):
         def mousePressEvent(self, evt):
@@ -75,15 +75,15 @@ def dogTooltip(msg, image=":/icons/help-hint.png",
     <center><b>%i cards done so far!</b><br>%s</center>
 </td>
 </tr>
-</table>""" % (local_conf["image_height"], image, mw.dogs["cnt"], msg), aw)
+</table>""" % (config["local"]["image_height"], image, mw.dogs["cnt"], msg), aw)
     lab.setFrameStyle(QFrame.Panel)
     lab.setLineWidth(2)
     lab.setWindowFlags(Qt.ToolTip)
     p = QPalette()
-    p.setColor(QPalette.Window, QColor(local_conf["tooltip_color"]))
+    p.setColor(QPalette.Window, QColor(config["local"]["tooltip_color"]))
     p.setColor(QPalette.WindowText, QColor("#000000"))
     lab.setPalette(p)
-    vdiff = (local_conf["image_height"] - 128) / 2
+    vdiff = (config["local"]["image_height"] - 128) / 2
     lab.move(
         aw.mapToGlobal(QPoint(0, -260-vdiff + aw.height())))
     lab.show()
@@ -106,14 +106,14 @@ def closeTooltip():
 
 def getEncouragement(cards):
     last = mw.dogs["enc"]
-    if cards >= local_conf["limit_max"]:
-        lst = list(local_conf["encouragements"]["max"])
-    elif cards >= local_conf["limit_high"]:
-        lst = list(local_conf["encouragements"]["high"])
-    elif cards >= local_conf["limit_middle"]:
-        lst = list(local_conf["encouragements"]["middle"])
+    if cards >= config["local"]["limit_max"]:
+        lst = list(config["local"]["encouragements"]["max"])
+    elif cards >= config["local"]["limit_high"]:
+        lst = list(config["local"]["encouragements"]["high"])
+    elif cards >= config["local"]["limit_middle"]:
+        lst = list(config["local"]["encouragements"]["middle"])
     else:
-        lst = list(local_conf["encouragements"]["low"])
+        lst = list(config["local"]["encouragements"]["low"])
     if last and last in lst:
         # skip identical encouragement
         lst.remove(last)
@@ -129,9 +129,9 @@ def showDog():
     msg = getEncouragement(mw.dogs["cnt"])
     dogTooltip(msg, image=image_path)
     # intermittent reinforcement:
-    mw.dogs["ivl"] = max(1, local_conf["encourage_every"] +
-                         random.randint(-local_conf["max_spread"],
-                                        local_conf["max_spread"]))
+    mw.dogs["ivl"] = max(1, config["local"]["encourage_every"] +
+                         random.randint(-config["local"]["max_spread"],
+                                        config["local"]["max_spread"]))
     mw.dogs["last"] = mw.dogs["cnt"]
 
 addHook("showQuestion", showDog)
