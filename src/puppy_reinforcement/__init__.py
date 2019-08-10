@@ -38,4 +38,9 @@ from __future__ import (absolute_import, division,
 
 from ._version import __version__  # noqa: F401
 
+from .consts import ADDON
+from .libaddon.consts import setAddonProperties
+
+setAddonProperties(ADDON)
+
 from . import main  # noqa: F401

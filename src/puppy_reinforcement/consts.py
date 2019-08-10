@@ -38,28 +38,44 @@ from __future__ import (absolute_import, division,
 
 from ._version import __version__
 
+try:
+    from .data.patrons import MEMBERS_CREDITED, MEMBERS_TOP
+except ImportError:
+    MEMBERS_CREDITED = MEMBERS_TOP = ()
+
 __all__ = [
-    "ADDON_NAME", "ADDON_ID", "ADDON_VERSION", "LINKS",
-    "LICENSE", "LIBRARIES", "AUTHORS", "CONTRIBUTORS",
-    "SPONSORS"
+    "ADDON"
 ]
 
-# ADD-ON
+# PROPERTIES DESCRIBING ADDON
 
-ADDON_NAME = "Puppy Reinforcement"
-ADDON_ID = "1722658993"
-ADDON_VERSION = __version__
-LINKS = {
-    "help": ""
-}
-LICENSE = "GNU AGPLv3"
-LIBRARIES = []
-AUTHORS = [
-    {"name": "Aristotelis P. (Glutanimate", "years": "2016-2019",
-     "contact": "https://glutanimate.com"}
-]
-# automatically sorted:
-CONTRIBUTORS = [
-    "zjosua"
-]
-SPONSORS = []
+
+class ADDON(object):
+    """Class storing general add-on properties
+    Property names need to be all-uppercase with no leading underscores
+    """
+    NAME = "Puppy Reinforcement"
+    MODULE = "puppy_reinforcement"
+    ID = "1722658993"
+    VERSION = __version__
+    LICENSE = "GNU AGPLv3"
+    AUTHORS = (
+        {"name": "Aristotelis P. (Glutanimate)", "years": "2016-2019",
+         "contact": "https://glutanimate.com"},
+    )
+    AUTHOR_MAIL = "ankiglutanimate@gmail.com"
+    LIBRARIES = ()
+    CONTRIBUTORS = ("zjosua", )
+    SPONSORS = ()
+    MEMBERS_CREDITED = MEMBERS_CREDITED
+    MEMBERS_TOP = MEMBERS_TOP
+    LINKS = {
+        "patreon": "https://www.patreon.com/glutanimate",
+        "bepatron": "https://www.patreon.com/bePatron?u=7522179",
+        "coffee": "http://ko-fi.com/glutanimate",
+        "description": "https://ankiweb.net/shared/info/{}".format(ID),
+        "rate": "https://ankiweb.net/shared/review/{}".format(ID),
+        "twitter": "https://twitter.com/glutanimate",
+        "youtube": "https://www.youtube.com/c/glutanimate",
+        "help": ""
+    }
