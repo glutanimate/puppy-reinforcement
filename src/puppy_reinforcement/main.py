@@ -40,7 +40,8 @@ import random
 from aqt import mw
 from aqt.qt import *
 from aqt.addcards import AddCards
-from anki.hooks import addHook, wrap
+from aqt.reviewer import Reviewer
+from anki.hooks import wrap
 
 from .config import config
 
@@ -135,12 +136,23 @@ def showDog():
                                         config["local"]["max_spread"]))
     mw.dogs["last"] = mw.dogs["cnt"]
 
+def _myAnswerCard(self, ease, _old):
+    if self.mw.state != "review":
+        # showing resetRequired screen; ignore key
+        return
+    if self.state != "answer":
+        return
+    if self.mw.col.sched.answerButtons(self.card) < ease:
+        return
+    _old(self, ease)
+    showDog()
+
 def myAddNote(self, note, _old):
     ret = _old(self, note)
     if ret:
         showDog()
     return ret
 
-addHook("showQuestion", showDog)
+Reviewer._answerCard = wrap(Reviewer._answerCard, _myAnswerCard, "around")
 if config["local"]["count_adding"]:
     AddCards.addNote = wrap(AddCards.addNote, myAddNote, "around")
