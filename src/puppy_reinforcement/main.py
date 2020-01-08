@@ -39,7 +39,8 @@ import random
 
 from aqt import mw
 from aqt.qt import *
-from anki.hooks import addHook
+from aqt.addcards import AddCards
+from anki.hooks import addHook, wrap
 
 from .config import config
 
@@ -134,4 +135,12 @@ def showDog():
                                         config["local"]["max_spread"]))
     mw.dogs["last"] = mw.dogs["cnt"]
 
+def myAddNote(self, note, _old):
+    ret = _old(self, note)
+    if ret:
+        showDog()
+    return ret
+
 addHook("showQuestion", showDog)
+if config["local"]["count_adding"]:
+    AddCards.addNote = wrap(AddCards.addNote, myAddNote, "around")
