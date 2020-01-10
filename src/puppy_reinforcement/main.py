@@ -40,7 +40,7 @@ import random
 from aqt import mw
 from aqt.qt import *
 from aqt.addcards import AddCards
-from anki.hooks import addHook, wrap
+from anki.hooks import addHook
 
 from .config import config
 
@@ -122,7 +122,7 @@ def getEncouragement(cards):
     mw.dogs["enc"] = lst[idx]
     return lst[idx]
 
-def showDog():
+def showDog(note=None):
     mw.dogs["cnt"] += 1
     if mw.dogs["cnt"] != mw.dogs["last"] + mw.dogs["ivl"]:
         return
@@ -135,12 +135,6 @@ def showDog():
                                         config["local"]["max_spread"]))
     mw.dogs["last"] = mw.dogs["cnt"]
 
-def myAddNote(self, note, _old):
-    ret = _old(self, note)
-    if ret:
-        showDog()
-    return ret
-
 addHook("showQuestion", showDog)
 if config["local"]["count_adding"]:
-    AddCards.addNote = wrap(AddCards.addNote, myAddNote, "around")
+    addHook("AddCards.noteAdded", showDog)
