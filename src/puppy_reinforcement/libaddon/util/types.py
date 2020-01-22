@@ -29,6 +29,13 @@
 #
 # Any modifications to this file must keep this entire header intact.
 
-"""
-Vendorized third-party packages
-"""
+from pathlib import Path
+
+try:
+    from typing import Union
+except ImportError:
+    from .._vendor.typing import Union
+
+
+ListOrTuple = Union[list, tuple]
+PathOrString = Union[str, Path]

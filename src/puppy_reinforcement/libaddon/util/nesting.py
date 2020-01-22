@@ -2,7 +2,7 @@
 
 # Libaddon for Anki
 #
-# Copyright (C) 2018-2019  Aristotelis P. <https//glutanimate.com/>
+# Copyright (C) 2018-2020  Aristotelis P. <https//glutanimate.com/>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -30,31 +30,32 @@
 # Any modifications to this file must keep this entire header intact.
 
 """
-Miscellaneuos utilities used around libaddon
+Manipulation of nested data structures
 """
-
-from __future__ import (absolute_import, division,
-                        print_function, unicode_literals)
-
-import os
 
 from functools import reduce
 from copy import deepcopy
 
+try:
+    from typing import Union, Any
+except ImportError:
+    from .._vendor.typing import Union, Any
+
+
 # Utility functions for operating with nested objects
 
 
-def getNestedValue(obj, keys):
+def getNestedValue(obj: Any, keys: Union[list, tuple]):
     """
     Get value out of nested collection by supplying tuple of
     nested keys/indices
 
     Arguments:
-        obj {list/dict} -- Nested collection
-        keys {tuple} -- Key/index path leading to config val
+        obj {Collection} -- Nested collection
+        keys {list/tuple} -- Key/index path leading to config val
 
     Returns:
-        object -- Config value
+        Any -- Config value
     """
     cur = obj
     for nr, key in enumerate(keys):
@@ -62,15 +63,15 @@ def getNestedValue(obj, keys):
     return cur
 
 
-def setNestedValue(obj, keys, value):
+def setNestedValue(obj: Any, keys: Union[list, tuple], value) -> None:
     """
-    Set value in nested collection by supplying tuple of
+    Set value in nested collection by supplying Sequence of
     nested keys / indices, and value to set
 
     Arguments:
-        obj {list/dict} -- Nested collection
-        keys {tuple} -- Tuple of keys/indices
-        value {object} -- Key/index path leading to config val
+        obj {Collection} -- Nested collection
+        keys {list/tuple} -- Key/index path leading to config val
+        value {Any} -- value
     """
     depth = len(keys) - 1
     cur = obj
@@ -81,7 +82,7 @@ def setNestedValue(obj, keys, value):
         cur = cur[key]
 
 
-def getNestedAttribute(obj, attr, *args):
+def getNestedAttribute(obj: Any, attr: str, *args) -> Any:
     """
     Gets nested attribute from "."-separated string
 
@@ -92,17 +93,19 @@ def getNestedAttribute(obj, attr, *args):
                          of nesting
 
     Returns:
-        object -- object corresponding to attribute name
+        Any -- object corresponding to attribute name
 
     Credits:
         https://gist.github.com/wonderbeyond/d293e7a2af1de4873f2d757edd580288
     """
-    def _getattr(obj, attr):
+
+    def _getattr(obj: Any, attr: str):
         return getattr(obj, attr, *args)
-    return reduce(_getattr, [obj] + attr.split('.'))
+
+    return reduce(_getattr, [obj] + attr.split("."))
 
 
-def deepMergeLists(original, incoming, new=False):
+def deepMergeLists(original: list, incoming: list, new: bool = False) -> list:
     """
     Deep merge two lists. Optionally leaves original intact.
 
@@ -132,11 +135,9 @@ def deepMergeLists(original, incoming, new=False):
 
     common_length = min(len(original), len(incoming))
     for idx in range(common_length):
-        if (isinstance(result[idx], dict) and
-                isinstance(incoming[idx], dict)):
+        if isinstance(result[idx], dict) and isinstance(incoming[idx], dict):
             deepMergeDicts(result[idx], incoming[idx])
-        elif (isinstance(result[idx], list) and
-                isinstance(incoming[idx], list)):
+        elif isinstance(result[idx], list) and isinstance(incoming[idx], list):
             deepMergeLists(result[idx], incoming[idx])
         else:
             result[idx] = incoming[idx]
@@ -147,7 +148,7 @@ def deepMergeLists(original, incoming, new=False):
     return result
 
 
-def deepMergeDicts(original, incoming, new=False):
+def deepMergeDicts(original: dict, incoming: dict, new: bool = False) -> dict:
     """
     Deep merge two dictionaries. Optionally leaves original intact.
 
@@ -168,8 +169,8 @@ def deepMergeDicts(original, incoming, new=False):
         - existing values whose data types have changed (e.g. list → dict)
 
     Arguments:
-        original {list} -- original dictionary
-        incoming {list} -- dictionary with updated values
+        original {dict} -- original dictionary
+        incoming {dict} -- dictionary with updated values
         new {bool} -- whether or not to create a new dictionary instead of
                       updating original
 
@@ -184,14 +185,11 @@ def deepMergeDicts(original, incoming, new=False):
 
     for key in incoming:
         if key in result:
-            if (isinstance(result[key], dict) and
-                    isinstance(incoming[key], dict)):
+            if isinstance(result[key], dict) and isinstance(incoming[key], dict):
                 deepMergeDicts(result[key], incoming[key])
-            elif (isinstance(result[key], list) and
-                    isinstance(incoming[key], list)):
+            elif isinstance(result[key], list) and isinstance(incoming[key], list):
                 deepMergeLists(result[key], incoming[key])
-            elif (result[key] is not None and
-                    (type(result[key]) != type(incoming[key]))):
+            elif result[key] is not None and (type(result[key]) != type(incoming[key])):
                 # switched to different data type, original takes precedence
                 # with the exception of None value in original being replaced
                 pass
@@ -202,26 +200,3 @@ def deepMergeDicts(original, incoming, new=False):
             result[key] = incoming[key]
 
     return result
-
-
-# File system manipulation
-
-def ensureExists(path):
-    if not os.path.exists(path):
-        os.makedirs(path)
-    return path
-
-
-def openFile(path):
-    """Open file in default viewer"""
-    import subprocess
-    from .platform import PLATFORM
-    if PLATFORM == "win":
-        try:
-            os.startfile(path)
-        except (OSError, UnicodeDecodeError):
-            pass
-    elif PLATFORM == "mac":
-        subprocess.call(('open', path))
-    else:
-        subprocess.call(("xdg-open", path))
