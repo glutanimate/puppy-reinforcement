@@ -37,9 +37,12 @@ Initializes add-on components.
 import os
 import random
 
-from aqt import mw
-from aqt.qt import *
+from PyQt5.QtCore import QPoint, Qt
+from PyQt5.QtGui import QColor, QPalette
+from PyQt5.QtWidgets import QFrame, QLabel
+
 from anki.hooks import addHook
+from aqt import mw
 
 from .config import config
 
