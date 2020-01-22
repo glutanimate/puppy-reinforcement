@@ -37,12 +37,15 @@ Initializes add-on components.
 import os
 import random
 
+
 from PyQt5.QtCore import QPoint, QTimer, Qt
 from PyQt5.QtGui import QColor, QMouseEvent, QPalette
 from PyQt5.QtWidgets import QFrame, QLabel, QWidget
 
-from anki.hooks import addHook
+from anki.hooks import addHook, wrap
+from aqt.addcards import AddCards
 from aqt import mw
+
 
 from .config import config
 
@@ -152,5 +155,12 @@ def showDog():
     )
     mw.dogs["last"] = mw.dogs["cnt"]
 
+def myAddNote(self, note, _old):
+    ret = _old(self, note)
+    if ret:
+        showDog()
+    return ret
 
 addHook("showQuestion", showDog)
+if config["local"]["count_adding"]:
+    AddCards.addNote = wrap(AddCards.addNote, myAddNote, "around")

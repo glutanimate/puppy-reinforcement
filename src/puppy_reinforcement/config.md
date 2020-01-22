@@ -1,5 +1,6 @@
 **Puppy Reinforcement** supports the following config values:
 
+- `count_adding` [bool]: count adding notes as well; default: `false`
 - `duration` [int]: duration in msec; default: `3000`
 - `encourage_every` [int]: show encouragement about every n cards; default: `10`
 - `encouragements` [dict]: encouragements by level
