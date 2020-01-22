@@ -40,7 +40,9 @@ from .tooltip import dogTooltip
 
 addon_path = os.path.dirname(__file__)
 dogs_dir = os.path.join(addon_path, "images")
-dogs_imgs = [i for i in os.listdir(dogs_dir) if i.endswith((".jpg", ".jpeg", ".png"))]
+dogs_imgs = [
+    i for i in os.listdir(dogs_dir) if i.lower().endswith((".jpg", ".jpeg", ".png"))
+]
 
 
 def getEncouragement(cards: int) -> str:
