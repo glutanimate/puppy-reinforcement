@@ -33,9 +33,6 @@
 Handles add-on configuration
 """
 
-from __future__ import (absolute_import, division,
-                        print_function, unicode_literals)
-
 from aqt import mw
 
 from .libaddon.anki.configmanager import ConfigManager
