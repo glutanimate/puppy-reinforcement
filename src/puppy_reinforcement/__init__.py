@@ -105,7 +105,8 @@ def initializeAddon():
 
     setAddonProperties(ADDON)
 
-    from . import main  # noqa: F401
+    from .views import initializeViews
+    initializeViews()
 
 
 initializeAddon()
