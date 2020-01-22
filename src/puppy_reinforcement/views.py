@@ -71,8 +71,8 @@ def initializeViews():
             AddCards.addNote = wrap(AddCards.addNote, myAddNote, "around")
     else:
         # TODO: will only work once https://github.com/ankitects/anki/pull/424 is merged
-        from anki.hooks import card_added
-        card_added.append(showDog)
+        from anki.hooks import card_answered
+        card_answered.append(showDog)
         
         from aqt.gui_hooks import add_cards_did_add_note
         if config["local"]["count_adding"]:
