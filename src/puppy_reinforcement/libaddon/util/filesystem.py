@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Puppy Reinforcement Add-on for Anki
+# Libaddon for Anki
 #
-# Copyright (C) 2016-2020  Aristotelis P. <https://glutanimate.com/>
+# Copyright (C) 2018-2020  Aristotelis P. <https//glutanimate.com/>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -30,7 +30,34 @@
 # Any modifications to this file must keep this entire header intact.
 
 """
-Version information
+File system manipulation utilities
 """
 
-__version__ = "0.2.0-alpha.1"
+import os
+import sys
+
+from .types import PathOrString
+
+
+def ensureExists(path: PathOrString) -> str:
+    path = str(path)
+    if not os.path.exists(path):
+        os.makedirs(path)
+    return path
+
+
+def openFile(path: PathOrString) -> None:
+    """Open file in default viewer"""
+    import subprocess
+
+    path = str(path)
+
+    if sys.platform.startswith("win32"):
+        try:
+            os.startfile(path)  # type: ignore
+        except (OSError, UnicodeDecodeError):
+            pass
+    elif sys.platform.startswith("darwin"):
+        subprocess.call(("open", path))
+    else:
+        subprocess.call(("xdg-open", path))

@@ -2,7 +2,7 @@
 
 # Puppy Reinforcement Add-on for Anki
 #
-# Copyright (C) 2016-2019  Aristotelis P. <https://glutanimate.com/>
+# Copyright (C) 2016-2020  Aristotelis P. <https://glutanimate.com/>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -33,19 +33,14 @@
 Addon-wide constants
 """
 
-from __future__ import (absolute_import, division,
-                        print_function, unicode_literals)
-
 from ._version import __version__
 
 try:
-    from .data.patrons import MEMBERS_CREDITED, MEMBERS_TOP
+    from .data.patrons import MEMBERS_CREDITED, MEMBERS_TOP  # type:ignore
 except ImportError:
     MEMBERS_CREDITED = MEMBERS_TOP = ()
 
-__all__ = [
-    "ADDON"
-]
+__all__ = ["ADDON"]
 
 # PROPERTIES DESCRIBING ADDON
 
@@ -54,21 +49,25 @@ class ADDON(object):
     """Class storing general add-on properties
     Property names need to be all-uppercase with no leading underscores
     """
+
     NAME = "Puppy Reinforcement"
     MODULE = "puppy_reinforcement"
     ID = "1722658993"
     VERSION = __version__
     LICENSE = "GNU AGPLv3"
     AUTHORS = (
-        {"name": "Aristotelis P. (Glutanimate)", "years": "2016-2019",
-         "contact": "https://glutanimate.com"},
+        {
+            "name": "Aristotelis P. (Glutanimate)",
+            "years": "2016-2020",
+            "contact": "https://glutanimate.com",
+        },
     )
     AUTHOR_MAIL = "ankiglutanimate@gmail.com"
     LIBRARIES = ()
-    CONTRIBUTORS = ("zjosua", )
+    CONTRIBUTORS = ("zjosua",)
     SPONSORS = ()
-    MEMBERS_CREDITED = MEMBERS_CREDITED
-    MEMBERS_TOP = MEMBERS_TOP
+    MEMBERS_CREDITED = MEMBERS_CREDITED  # type:ignore
+    MEMBERS_TOP = MEMBERS_TOP  # type:ignore
     LINKS = {
         "patreon": "https://www.patreon.com/glutanimate",
         "bepatron": "https://www.patreon.com/bePatron?u=7522179",
@@ -77,5 +76,5 @@ class ADDON(object):
         "rate": "https://ankiweb.net/shared/review/{}".format(ID),
         "twitter": "https://twitter.com/glutanimate",
         "youtube": "https://www.youtube.com/c/glutanimate",
-        "help": ""
+        "help": "",
     }

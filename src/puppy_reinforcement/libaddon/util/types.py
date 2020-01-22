@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Puppy Reinforcement Add-on for Anki
+# Libaddon for Anki
 #
-# Copyright (C) 2016-2020  Aristotelis P. <https://glutanimate.com/>
+# Copyright (C) 2018-2020  Aristotelis P. <https//glutanimate.com/>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -29,8 +29,13 @@
 #
 # Any modifications to this file must keep this entire header intact.
 
-"""
-Version information
-"""
+from pathlib import Path
 
-__version__ = "0.2.0-alpha.1"
+try:
+    from typing import Union
+except ImportError:
+    from .._vendor.typing import Union
+
+
+ListOrTuple = Union[list, tuple]
+PathOrString = Union[str, Path]

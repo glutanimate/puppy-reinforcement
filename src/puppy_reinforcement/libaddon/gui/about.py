@@ -86,8 +86,21 @@ html_template = """\
         For more information please see the license file that accompanied this program.</p>
     <p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY.
         Please see the license file for more details.</p>
+    
+    {debugging}
 </body>
 </html>\
+"""
+
+debugging_template = """\
+<p><span style="font-weight:600;">Debugging</span></p>
+<p>Please don't use any of the following features unless instructed to:</p>
+<ul>
+    <li><a href="action://debug-toggle">Toggle debugging</a></li>
+    <li><a href="action://debug-copy">Copy log to clipboard</a></li>
+    <li><a href="action://debug-open">Open log</a></li>
+    <li><a href="action://debug-clear">Clear log</a></li>
+</ul>\
 """
 
 authors_template = """\
@@ -102,7 +115,7 @@ title_template = """\
 <h3>About {display_name} (v{version})</h3>\
 """
 
-def get_about_string(title=False):
+def getAboutString(title=False, showDebug=False):
     authors_string = "\n".join(authors_template.format(**dct)
                                for dct in ADDON.AUTHORS)
     libs_entries = "\n".join(libs_item_template.format(**dct)
@@ -125,6 +138,11 @@ def get_about_string(title=False):
                                              version=ADDON.VERSION)
     else:
         title_string = ""
+        
+    if showDebug:
+        debugging = debugging_template
+    else:
+        debugging = ""
 
     return html_template.format(display_name=ADDON.NAME,
                                 license=ADDON.LICENSE,
@@ -133,4 +151,5 @@ def get_about_string(title=False):
                                 libs_string=libs_string,
                                 contributors_string=contributors_string,
                                 members_string=members_string,
-                                qrc_prefix=ADDON.MODULE)
+                                qrc_prefix=ADDON.MODULE,
+                                debugging=debugging)

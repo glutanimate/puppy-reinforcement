@@ -28,7 +28,7 @@ The configuration can be customized by either using Anki 2.1's inbuilt add-on co
 ### CREDITS AND LICENSE
 
 *Copyright © 2015 [mbertolacci](https://github.com/mbertolacci)*
-*Copyright © 2016-2019 [Aristotelis P.](https://glutanimate.com/)  (Glutanimate)*
+*Copyright © 2016-2020 [Aristotelis P.](https://glutanimate.com/)  (Glutanimate)*
 
 With code contributions from: zjosua
 
