@@ -43,31 +43,30 @@ from anki.hooks import addHook
 
 from .config import config
 
-mw.dogs = {
-    "cnt": 0,
-    "last": 0,
-    "enc": None,
-    "ivl": config["local"]["encourage_every"]
-}
+mw.dogs = {"cnt": 0, "last": 0, "enc": None, "ivl": config["local"]["encourage_every"]}
 
 addon_path = os.path.dirname(__file__)
-dogs_dir = os.path.join(addon_path, 'images')
-dogs_imgs = [i for i in os.listdir(dogs_dir)
-             if i.endswith((".jpg", ".jpeg", ".png"))]
+dogs_dir = os.path.join(addon_path, "images")
+dogs_imgs = [i for i in os.listdir(dogs_dir) if i.endswith((".jpg", ".jpeg", ".png"))]
 
 _tooltipTimer = None
 _tooltipLabel = None
 
-def dogTooltip(msg, image=":/icons/help-hint.png",
-               period=config["local"]["duration"], parent=None):
+
+def dogTooltip(
+    msg, image=":/icons/help-hint.png", period=config["local"]["duration"], parent=None
+):
     global _tooltipTimer, _tooltipLabel
+
     class CustomLabel(QLabel):
         def mousePressEvent(self, evt):
             evt.accept()
             self.hide()
+
     closeTooltip()
     aw = parent or mw.app.activeWindow() or mw
-    lab = CustomLabel("""\
+    lab = CustomLabel(
+        """\
 <table cellpadding=10>
 <tr>
 <td><img height=%d src="%s"></td>
@@ -75,7 +74,10 @@ def dogTooltip(msg, image=":/icons/help-hint.png",
     <center><b>%i cards done so far!</b><br>%s</center>
 </td>
 </tr>
-</table>""" % (config["local"]["image_height"], image, mw.dogs["cnt"], msg), aw)
+</table>"""
+        % (config["local"]["image_height"], image, mw.dogs["cnt"], msg),
+        aw,
+    )
     lab.setFrameStyle(QFrame.Panel)
     lab.setLineWidth(2)
     lab.setWindowFlags(Qt.ToolTip)
@@ -84,12 +86,11 @@ def dogTooltip(msg, image=":/icons/help-hint.png",
     p.setColor(QPalette.WindowText, QColor("#000000"))
     lab.setPalette(p)
     vdiff = (config["local"]["image_height"] - 128) / 2
-    lab.move(
-        aw.mapToGlobal(QPoint(0, -260-vdiff + aw.height())))
+    lab.move(aw.mapToGlobal(QPoint(0, -260 - vdiff + aw.height())))
     lab.show()
-    _tooltipTimer = mw.progress.timer(
-        period, closeTooltip, False)
+    _tooltipTimer = mw.progress.timer(period, closeTooltip, False)
     _tooltipLabel = lab
+
 
 def closeTooltip():
     global _tooltipLabel, _tooltipTimer
@@ -103,6 +104,7 @@ def closeTooltip():
     if _tooltipTimer:
         _tooltipTimer.stop()
         _tooltipTimer = None
+
 
 def getEncouragement(cards):
     last = mw.dogs["enc"]
@@ -121,6 +123,7 @@ def getEncouragement(cards):
     mw.dogs["enc"] = lst[idx]
     return lst[idx]
 
+
 def showDog():
     mw.dogs["cnt"] += 1
     if mw.dogs["cnt"] != mw.dogs["last"] + mw.dogs["ivl"]:
@@ -129,9 +132,12 @@ def showDog():
     msg = getEncouragement(mw.dogs["cnt"])
     dogTooltip(msg, image=image_path)
     # intermittent reinforcement:
-    mw.dogs["ivl"] = max(1, config["local"]["encourage_every"] +
-                         random.randint(-config["local"]["max_spread"],
-                                        config["local"]["max_spread"]))
+    mw.dogs["ivl"] = max(
+        1,
+        config["local"]["encourage_every"]
+        + random.randint(-config["local"]["max_spread"], config["local"]["max_spread"]),
+    )
     mw.dogs["last"] = mw.dogs["cnt"]
+
 
 addHook("showQuestion", showDog)
