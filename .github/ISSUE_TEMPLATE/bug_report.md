@@ -38,23 +38,6 @@ assignees: ''
 ```
 
 
-#####  If you are using Anki 2.0
-
-*__ONLY IF YOU ARE USING ANKI 2.0__: Please open Anki, go to Help → About, find the two lines starting with `Version:` and `Qt`, and copy-paste them between the backticks below:*
-
-```
-
-```
-
-*Please fill in details about your operating system (Windows/macOS/Linux, which version):*
-
-- OS:
-- version:
-
-*Please open Anki, go to Tools → Add-ons, take a screenshot of your installed add-ons, and paste it below:*
-
-
-
 #### Error message (if any)
 
 *If you've received an error message, please copy and paste it between the backticks below:*
