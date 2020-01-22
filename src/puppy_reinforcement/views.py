@@ -36,6 +36,7 @@ from aqt.reviewer import Reviewer
 
 from .config import config
 from .puppies import showDog
+from .consts import USES_LEGACY_HOOKS
 
 try:
     from typing import Callable
@@ -65,4 +66,8 @@ def myAddNote(self, note, _old):
 def initializeViews():
     Reviewer._answerCard = wrap(Reviewer._answerCard, _myAnswerCard, "around")
     if config["local"]["count_adding"]:
-        AddCards.addNote = wrap(AddCards.addNote, myAddNote, "around")
+        if USES_LEGACY_HOOKS:
+            AddCards.addNote = wrap(AddCards.addNote, myAddNote, "around")
+        else:
+            from aqt.gui_hooks import add_cards_did_add_note
+            add_cards_did_add_note.append(showDog)

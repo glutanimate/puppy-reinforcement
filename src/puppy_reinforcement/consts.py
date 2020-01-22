@@ -34,6 +34,7 @@ Addon-wide constants
 """
 
 from ._version import __version__
+from .libaddon.platform import checkAnkiVersion
 
 try:
     from .data.patrons import MEMBERS_CREDITED, MEMBERS_TOP  # type:ignore
@@ -42,8 +43,9 @@ except ImportError:
 
 __all__ = ["ADDON"]
 
-# PROPERTIES DESCRIBING ADDON
+USES_LEGACY_HOOKS = not checkAnkiVersion("2.1.20")
 
+# PROPERTIES DESCRIBING ADDON
 
 class ADDON(object):
     """Class storing general add-on properties
