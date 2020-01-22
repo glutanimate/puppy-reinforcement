@@ -3,7 +3,7 @@
 # Puppy Reinforcement Add-on for Anki
 #
 # Copyright (C) 2016-2020  Aristotelis P. <https://glutanimate.com/>
-# Copyright (C) 2019  zjosua <https://github.com/zjosua>
+# Copyright (C) 2019-2020  zjosua <https://github.com/zjosua>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -44,8 +44,8 @@ from PyQt5.QtWidgets import QFrame, QLabel, QWidget
 
 from anki.hooks import addHook, wrap
 from aqt.addcards import AddCards
+from aqt.reviewer import Reviewer
 from aqt import mw
-
 
 from .config import config
 
@@ -155,12 +155,23 @@ def showDog():
     )
     mw.dogs["last"] = mw.dogs["cnt"]
 
+def _myAnswerCard(self, ease, _old):
+    if self.mw.state != "review":
+        # showing resetRequired screen; ignore key
+        return
+    if self.state != "answer":
+        return
+    if self.mw.col.sched.answerButtons(self.card) < ease:
+        return
+    _old(self, ease)
+    showDog()
+
 def myAddNote(self, note, _old):
     ret = _old(self, note)
     if ret:
         showDog()
     return ret
 
-addHook("showQuestion", showDog)
+Reviewer._answerCard = wrap(Reviewer._answerCard, _myAnswerCard, "around")
 if config["local"]["count_adding"]:
     AddCards.addNote = wrap(AddCards.addNote, myAddNote, "around")
