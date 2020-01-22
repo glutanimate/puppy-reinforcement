@@ -38,14 +38,13 @@ from aqt import mw
 from .config import config
 from .tooltip import dogTooltip
 
-mw.dogs = {"cnt": 0, "last": 0, "enc": None, "ivl": config["local"]["encourage_every"]}
 addon_path = os.path.dirname(__file__)
 dogs_dir = os.path.join(addon_path, "images")
 dogs_imgs = [i for i in os.listdir(dogs_dir) if i.endswith((".jpg", ".jpeg", ".png"))]
 
 
 def getEncouragement(cards: int) -> str:
-    last = mw.dogs["enc"]
+    last = mw._puppyState["enc"]
     if cards >= config["local"]["limit_max"]:
         lst = list(config["local"]["encouragements"]["max"])
     elif cards >= config["local"]["limit_high"]:
@@ -58,21 +57,31 @@ def getEncouragement(cards: int) -> str:
         # skip identical encouragement
         lst.remove(last)
     idx = random.randrange(len(lst))
-    mw.dogs["enc"] = lst[idx]
+    mw._puppyState["enc"] = lst[idx]
     return lst[idx]
 
 
 def showDog(*args, **kwargs):
-    mw.dogs["cnt"] += 1
-    if mw.dogs["cnt"] != mw.dogs["last"] + mw.dogs["ivl"]:
+    mw._puppyState["cnt"] += 1
+    if mw._puppyState["cnt"] != mw._puppyState["last"] + mw._puppyState["ivl"]:
         return
     image_path = os.path.join(dogs_dir, random.choice(dogs_imgs))
-    msg = getEncouragement(mw.dogs["cnt"])
+    msg = getEncouragement(mw._puppyState["cnt"])
     dogTooltip(msg, image=image_path)
     # intermittent reinforcement:
-    mw.dogs["ivl"] = max(
+    mw._puppyState["ivl"] = max(
         1,
         config["local"]["encourage_every"]
         + random.randint(-config["local"]["max_spread"], config["local"]["max_spread"]),
     )
-    mw.dogs["last"] = mw.dogs["cnt"]
+    mw._puppyState["last"] = mw._puppyState["cnt"]
+
+
+def initializePuppies():
+    mw._puppyState = {
+        "cnt": 0,
+        "last": 0,
+        "enc": None,
+        "ivl": config["local"]["encourage_every"],
+    }
+

@@ -79,7 +79,7 @@ def dogTooltip(
 </td>
 </tr>
 </table>"""
-        % (config["local"]["image_height"], image, mw.dogs["cnt"], msg),
+        % (config["local"]["image_height"], image, mw._puppyState["cnt"], msg),
         aw,
     )
     lab.setFrameStyle(QFrame.Panel)

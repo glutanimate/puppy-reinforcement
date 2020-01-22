@@ -106,6 +106,9 @@ def initializeAddon():
     setAddonProperties(ADDON)
 
     from .views import initializeViews
+    from .puppies import initializePuppies
+    
+    initializePuppies()
     initializeViews()
 
 
