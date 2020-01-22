@@ -10,7 +10,6 @@
     "tags": "reviewer conditioning reinforcement gamification doggos",
     "conflicts": [],
     "targets": [
-        "anki20",
         "anki21"
     ]
 }
