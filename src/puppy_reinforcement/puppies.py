@@ -62,7 +62,7 @@ def getEncouragement(cards: int) -> str:
     return lst[idx]
 
 
-def showDog(note=None):
+def showDog(*args, **kwargs):
     mw.dogs["cnt"] += 1
     if mw.dogs["cnt"] != mw.dogs["last"] + mw.dogs["ivl"]:
         return

@@ -44,6 +44,7 @@ except ImportError:
     from .libaddon._vendor.typing import Callable
 
 
+# TODO: Drop monkey-patches as soon as we're ready to drop Anki <2.1.20 support
 def _myAnswerCard(self, ease: int, _old: Callable):
     if self.mw.state != "review":
         # showing resetRequired screen; ignore key
@@ -64,10 +65,15 @@ def myAddNote(self, note, _old):
 
 
 def initializeViews():
-    Reviewer._answerCard = wrap(Reviewer._answerCard, _myAnswerCard, "around")
-    if config["local"]["count_adding"]:
-        if USES_LEGACY_HOOKS:
+    if USES_LEGACY_HOOKS:
+        Reviewer._answerCard = wrap(Reviewer._answerCard, _myAnswerCard, "around")
+        if config["local"]["count_adding"]:
             AddCards.addNote = wrap(AddCards.addNote, myAddNote, "around")
-        else:
-            from aqt.gui_hooks import add_cards_did_add_note
+    else:
+        # TODO: will only work once https://github.com/ankitects/anki/pull/424 is merged
+        from anki.hooks import card_added
+        card_added.append(showDog)
+        
+        from aqt.gui_hooks import add_cards_did_add_note
+        if config["local"]["count_adding"]:
             add_cards_did_add_note.append(showDog)
