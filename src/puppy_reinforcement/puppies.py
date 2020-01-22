@@ -30,96 +30,18 @@
 #
 # Any modifications to this file must keep this entire header intact.
 
-"""
-Initializes add-on components.
-"""
-
 import os
 import random
 
-
-from PyQt5.QtCore import QPoint, QTimer, Qt
-from PyQt5.QtGui import QColor, QMouseEvent, QPalette
-from PyQt5.QtWidgets import QFrame, QLabel, QWidget
-
-from anki.hooks import addHook, wrap
-from aqt.addcards import AddCards
-from aqt.reviewer import Reviewer
 from aqt import mw
 
 from .config import config
-
-try:
-    from typing import Optional
-except ImportError:
-    from .libaddon._vendor.typing import Optional
+from .tooltip import dogTooltip
 
 mw.dogs = {"cnt": 0, "last": 0, "enc": None, "ivl": config["local"]["encourage_every"]}
-
 addon_path = os.path.dirname(__file__)
 dogs_dir = os.path.join(addon_path, "images")
 dogs_imgs = [i for i in os.listdir(dogs_dir) if i.endswith((".jpg", ".jpeg", ".png"))]
-
-
-class CustomLabel(QLabel):
-    def mousePressEvent(self, evt: QMouseEvent):
-        evt.accept()
-        self.hide()
-
-
-_tooltipTimer: Optional[QTimer] = None
-_tooltipLabel: Optional[CustomLabel] = None
-
-
-def dogTooltip(
-    msg: str,
-    image: str = ":/icons/help-hint.png",
-    period: int = config["local"]["duration"],
-    parent: QWidget = None,
-):
-    global _tooltipTimer, _tooltipLabel
-
-    closeTooltip()
-    aw = parent or mw.app.activeWindow() or mw
-    lab = CustomLabel(
-        """\
-<table cellpadding=10>
-<tr>
-<td><img height=%d src="%s"></td>
-<td valign="middle">
-    <center><b>%i cards done so far!</b><br>%s</center>
-</td>
-</tr>
-</table>"""
-        % (config["local"]["image_height"], image, mw.dogs["cnt"], msg),
-        aw,
-    )
-    lab.setFrameStyle(QFrame.Panel)
-    lab.setLineWidth(2)
-    lab.setWindowFlags(Qt.ToolTip)
-    p = QPalette()
-    p.setColor(QPalette.Window, QColor(config["local"]["tooltip_color"]))
-    p.setColor(QPalette.WindowText, QColor("#000000"))
-    lab.setPalette(p)
-    vdiff = (config["local"]["image_height"] - 128) / 2
-    lab.move(aw.mapToGlobal(QPoint(0, -260 - vdiff + aw.height())))
-    lab.show()
-    _tooltipTimer = mw.progress.timer(period, closeTooltip, False)
-    _tooltipLabel = lab
-
-
-def closeTooltip():
-    global _tooltipLabel, _tooltipTimer
-    if _tooltipLabel:
-        try:
-            _tooltipLabel.deleteLater()
-        except:  # noqa: E722
-            # already deleted as parent window closed
-            pass
-        _tooltipLabel = None
-    if _tooltipTimer:
-        _tooltipTimer.stop()
-        _tooltipTimer = None
 
 
 def getEncouragement(cards: int) -> str:
@@ -154,24 +76,3 @@ def showDog():
         + random.randint(-config["local"]["max_spread"], config["local"]["max_spread"]),
     )
     mw.dogs["last"] = mw.dogs["cnt"]
-
-def _myAnswerCard(self, ease, _old):
-    if self.mw.state != "review":
-        # showing resetRequired screen; ignore key
-        return
-    if self.state != "answer":
-        return
-    if self.mw.col.sched.answerButtons(self.card) < ease:
-        return
-    _old(self, ease)
-    showDog()
-
-def myAddNote(self, note, _old):
-    ret = _old(self, note)
-    if ret:
-        showDog()
-    return ret
-
-Reviewer._answerCard = wrap(Reviewer._answerCard, _myAnswerCard, "around")
-if config["local"]["count_adding"]:
-    AddCards.addNote = wrap(AddCards.addNote, myAddNote, "around")
