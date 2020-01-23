@@ -8,6 +8,7 @@
     "limit_high": 50,
     "limit_middle": 25,
     "count_adding": false,
+    "disable_default_images": false,
     "encouragements": {
         "low": ["Great job!", "Keep it up!", "Way to go!", "Keep up the good work!"],
         "middle": ["You're on a streak!", "You're crushing it!", "Don't stop now!",

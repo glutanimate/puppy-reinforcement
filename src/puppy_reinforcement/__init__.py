@@ -100,16 +100,19 @@ def initializeAddon():
     if not checkFor2114ImportError():
         return False
 
+    from aqt import mw
+    
     from .consts import ADDON
     from .libaddon.consts import setAddonProperties
+    from .config import config
+    from .views import initializeViews
+    from .reinforcer import PuppyReinforcer
 
     setAddonProperties(ADDON)
 
-    from .views import initializeViews
-    from .puppies import initializePuppies
+    mw._puppy_reinforcer = PuppyReinforcer(mw, config)
     
-    initializePuppies()
-    initializeViews()
+    initializeViews(mw._puppy_reinforcer)
 
 
 initializeAddon()

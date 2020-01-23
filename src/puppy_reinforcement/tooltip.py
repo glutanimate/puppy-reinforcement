@@ -47,8 +47,6 @@ except ImportError:
     from .libaddon._vendor.typing import Optional
 
 
-from .config import config
-
 class CustomLabel(QLabel):
     def mousePressEvent(self, evt: QMouseEvent):
         evt.accept()
@@ -60,9 +58,12 @@ _tooltipLabel: Optional[CustomLabel] = None
 
 
 def dogTooltip(
-    msg: str,
-    image: str = ":/icons/help-hint.png",
-    period: int = config["local"]["duration"],
+    encouragement: str,
+    image_path: str,
+    count: int,
+    image_height: int,
+    color: str,
+    duration: int,
     parent: QWidget = None,
 ):
     global _tooltipTimer, _tooltipLabel
@@ -79,20 +80,20 @@ def dogTooltip(
 </td>
 </tr>
 </table>"""
-        % (config["local"]["image_height"], image, mw._puppyState["cnt"], msg),
+        % (image_height, image_path, count, encouragement),
         aw,
     )
     lab.setFrameStyle(QFrame.Panel)
     lab.setLineWidth(2)
     lab.setWindowFlags(Qt.ToolTip)
     p = QPalette()
-    p.setColor(QPalette.Window, QColor(config["local"]["tooltip_color"]))
+    p.setColor(QPalette.Window, QColor(color))
     p.setColor(QPalette.WindowText, QColor("#000000"))
     lab.setPalette(p)
-    vdiff = (config["local"]["image_height"] - 128) / 2
-    lab.move(aw.mapToGlobal(QPoint(0, -260 - vdiff + aw.height())))
+    vdiff = (image_height - 128) / 2
+    lab.move(aw.mapToGlobal(QPoint(0, -260 - vdiff + aw.height())))  # type:ignore
     lab.show()
-    _tooltipTimer = mw.progress.timer(period, closeTooltip, False)
+    _tooltipTimer = mw.progress.timer(duration, closeTooltip, False)
     _tooltipLabel = lab
 
 
