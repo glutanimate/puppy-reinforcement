@@ -55,6 +55,7 @@ class PuppyReinforcer:
         self._mw = mw
         self._config = config
         self._images: List[str] = []
+        self._playlist: List[int] = []  # self._images indexes
 
         self._state = {
             "cnt": 0,
@@ -63,14 +64,16 @@ class PuppyReinforcer:
             "ivl": self._config["local"]["encourage_every"],
         }
 
-        self._updateImages()
+        self._readImages()
+        self._rebuildPlaylist()
+        self._shufflePlaylist()
 
     def showDog(self, *args, **kwargs):
         config = self._config["local"]
         self._state["cnt"] += 1
         if self._state["cnt"] != self._state["last"] + self._state["ivl"]:
             return
-        image_path = random.choice(self._images)
+        image_path = self._getNextImage()
         encouragement = self._getEncouragement(self._state["cnt"])
         self._showTooltip(encouragement, image_path)
         # intermittent reinforcement:
@@ -92,7 +95,7 @@ class PuppyReinforcer:
             config["duration"],
         )
 
-    def _updateImages(self):
+    def _readImages(self):
         default_path = Path(PATH_THIS_ADDON) / "images"
         user_path = Path(pathUserFiles())
 
@@ -110,6 +113,24 @@ class PuppyReinforcer:
                 break
 
         self._images = images
+        
+        return images
+    
+    def _rebuildPlaylist(self):
+        self._playlist = list(range(len(self._images)))
+    
+    def _shufflePlaylist(self):
+        random.shuffle(self._playlist)
+    
+    def _getNextImage(self) -> str:
+        try:
+            index = self._playlist.pop()
+        except IndexError:
+            self._rebuildPlaylist()
+            self._shufflePlaylist()
+            index = self._playlist.pop()
+        return self._images[index]
+
 
     def _getEncouragement(self, cards: int) -> str:
         config = self._config["local"]
