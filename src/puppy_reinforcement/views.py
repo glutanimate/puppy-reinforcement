@@ -36,16 +36,23 @@ from aqt.reviewer import Reviewer
 
 from .config import config
 from .reinforcer import PuppyReinforcer
-from .consts import USES_LEGACY_HOOKS
 
 try:
     from typing import Any
 except ImportError:
     from .libaddon._vendor.typing import Any
 
+
 def initializeViews(puppy_reinforcer: PuppyReinforcer):
-    if USES_LEGACY_HOOKS:
-        # TODO: Drop monkey-patches as soon as we're ready to drop Anki <2.1.20 support
+    try:
+        from aqt.gui_hooks import reviewer_did_answer_card, add_cards_did_add_note
+
+        reviewer_did_answer_card.append(puppy_reinforcer.showDog)
+        if config["local"]["count_adding"]:
+            add_cards_did_add_note.append(puppy_reinforcer.showDog)
+
+    except (ImportError, ModuleNotFoundError):  # Anki < 2.1.20
+        # TODO: Drop monkey-patches in the future
         def _myAnswerCard(self, ease: int, _old: Any):
             if self.mw.state != "review":
                 # showing resetRequired screen; ignore key
@@ -57,21 +64,12 @@ def initializeViews(puppy_reinforcer: PuppyReinforcer):
             _old(self, ease)
             puppy_reinforcer.showDog()
 
-
         def myAddNote(self, note, _old):
             ret = _old(self, note)
             if ret:
                 puppy_reinforcer.showDog()
             return ret
-        
+
         Reviewer._answerCard = wrap(Reviewer._answerCard, _myAnswerCard, "around")
         if config["local"]["count_adding"]:
             AddCards.addNote = wrap(AddCards.addNote, myAddNote, "around")
-    else:
-        # TODO: will only work once https://github.com/ankitects/anki/pull/424 is merged
-        from anki.hooks import card_answered
-        card_answered.append(puppy_reinforcer.showDog)
-        
-        from aqt.gui_hooks import add_cards_did_add_note
-        if config["local"]["count_adding"]:
-            add_cards_did_add_note.append(puppy_reinforcer.showDog)
