@@ -34,7 +34,7 @@ import random
 import re
 from pathlib import Path
 
-from aqt import AnkiQt
+from aqt.main import AnkiQt
 
 from .tooltip import dogTooltip
 
