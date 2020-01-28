@@ -12,6 +12,23 @@ If you enjoy Puppy Reinforcement, please consider supporting my work on Patreon,
 
 ## [Unreleased]
 
+### Added
+
+- Anki 2.1 compatibility (thanks to @zjosua for his help with this!, #77)
+- Optional support for showing puppies while creating new cards. Controlled by the `count_adding` option in the settings (thanks to @zjosua for the implementation and /u/xTheKezio / @ijgnd for the idea, #12)
+- Support for more image file types and case-insensitive file extension detection
+- A more advanced randomization approach that spreads the chances of particular images being drawn up evenly (#8)
+
+### Fixed
+
+- Added workaround for add-on import bug present in Anki versions <= 2.1.14
+
+### Changed
+
+- Rewrote large parts of the add-on, making it a lot more maintainable for the future
+- Dropped Anki 2.0 support (legacy versions remain downloadable on AnkiWeb / GitHub)
+- Added support for the new add-on hooks system that will be introduced with the upcoming Anki 2.1.20 release. This should make the add-on fairly future-proof.
+
 ## [0.2.0-alpha.1] - 2019-06-09
 
 ### [Download](https://github.com/glutanimate/puppy-reinforcement/releases/tag/v0.2.0-alpha.1)
