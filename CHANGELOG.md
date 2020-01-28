@@ -12,6 +12,10 @@ If you enjoy Puppy Reinforcement, please consider supporting my work on Patreon,
 
 ## [Unreleased]
 
+## [1.0.0-beta.1] - 2020-01-28
+
+### [Download](https://github.com/glutanimate/puppy-reinforcement/releases/tag/v1.0.0-beta.1)
+
 ### Added
 
 - Anki 2.1 compatibility (thanks to @zjosua for his help with this!, #77)
@@ -61,7 +65,8 @@ If you enjoy Puppy Reinforcement, please consider supporting my work on Patreon,
 
 - Initial release of Puppy Reinforcement
 
-[Unreleased]: https://github.com/glutanimate/puppy-reinforcement/compare/v0.2.0-alpha.1...HEAD
+[Unreleased]: https://github.com/glutanimate/puppy-reinforcement/compare/v1.0.0-beta.1...HEAD
+[1.0.0-beta.1]: https://github.com/glutanimate/puppy-reinforcement/compare/v0.2.0-alpha.1...v1.0.0-beta.1
 [0.2.0-alpha.1]: https://github.com/glutanimate/puppy-reinforcement/releases/tag/v0.2.0-alpha.1
 
 -----
