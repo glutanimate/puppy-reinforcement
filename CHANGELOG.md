@@ -12,6 +12,11 @@ If you enjoy Puppy Reinforcement, please consider supporting my work on Patreon,
 
 ## [Unreleased]
 
+### Fixed
+
+- Fixed compatibility with Visual Feedback and other add-ons using newer versions of libaddon
+- Print "card" instead of "cards" if count singular
+
 ## [1.0.0-beta.1] - 2020-01-28
 
 ### [Download](https://github.com/glutanimate/puppy-reinforcement/releases/tag/v1.0.0-beta.1)
