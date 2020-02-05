@@ -12,6 +12,10 @@ If you enjoy Puppy Reinforcement, please consider supporting my work on Patreon,
 
 ## [Unreleased]
 
+## [1.0.0-beta.2] - 2020-02-05
+
+### [Download](https://github.com/glutanimate/puppy-reinforcement/releases/tag/v1.0.0-beta.2)
+
 ### Fixed
 
 - Fixed compatibility with Visual Feedback and other add-ons using newer versions of libaddon
@@ -70,7 +74,8 @@ If you enjoy Puppy Reinforcement, please consider supporting my work on Patreon,
 
 - Initial release of Puppy Reinforcement
 
-[Unreleased]: https://github.com/glutanimate/puppy-reinforcement/compare/v1.0.0-beta.1...HEAD
+[Unreleased]: https://github.com/glutanimate/puppy-reinforcement/compare/v1.0.0-beta.2...HEAD
+[1.0.0-beta.2]: https://github.com/glutanimate/puppy-reinforcement/compare/v1.0.0-beta.1...v1.0.0-beta.2
 [1.0.0-beta.1]: https://github.com/glutanimate/puppy-reinforcement/compare/v0.2.0-alpha.1...v1.0.0-beta.1
 [0.2.0-alpha.1]: https://github.com/glutanimate/puppy-reinforcement/releases/tag/v0.2.0-alpha.1
 
