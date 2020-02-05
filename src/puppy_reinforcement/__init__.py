@@ -33,6 +33,17 @@
 Module-level entry point for the add-on
 """
 
+# TODO: Drop typing & 2.1.14 workarounds as soon as we are ready to bump
+# the minimum required Anki version to 2.1.17+
+
+try:
+    import typing  # noqa: F401
+    import types  # noqa: F401
+except ImportError:
+    from .libaddon import registerLegacyVendorDir
+
+    registerLegacyVendorDir()
+
 from ._version import __version__  # noqa: F401
 
 
@@ -101,7 +112,7 @@ def initializeAddon():
         return False
 
     from aqt import mw
-    
+
     from .consts import ADDON
     from .libaddon.consts import setAddonProperties
     from .config import config
@@ -111,7 +122,7 @@ def initializeAddon():
     setAddonProperties(ADDON)
 
     mw._puppy_reinforcer = PuppyReinforcer(mw, config)
-    
+
     initializeViews(mw._puppy_reinforcer)
 
 
