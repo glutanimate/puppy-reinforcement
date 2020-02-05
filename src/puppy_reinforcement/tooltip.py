@@ -41,10 +41,7 @@ from PyQt5.QtWidgets import QFrame, QLabel, QWidget
 
 from aqt import mw
 
-try:
-    from typing import Optional
-except ImportError:
-    from .libaddon._vendor.typing import Optional
+from typing import Optional
 
 
 class CustomLabel(QLabel):

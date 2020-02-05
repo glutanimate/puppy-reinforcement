@@ -41,10 +41,7 @@ from .tooltip import dogTooltip
 from .libaddon.platform import PATH_THIS_ADDON, pathUserFiles
 from .libaddon.anki.configmanager import ConfigManager
 
-try:
-    from typing import List
-except ImportError:
-    from .libaddon._vendor.typing import List
+from typing import List
 
 
 class PuppyReinforcer:
@@ -113,15 +110,15 @@ class PuppyReinforcer:
                 break
 
         self._images = images
-        
+
         return images
-    
+
     def _rebuildPlaylist(self):
         self._playlist = list(range(len(self._images)))
-    
+
     def _shufflePlaylist(self):
         random.shuffle(self._playlist)
-    
+
     def _getNextImage(self) -> str:
         try:
             index = self._playlist.pop()
@@ -130,7 +127,6 @@ class PuppyReinforcer:
             self._shufflePlaylist()
             index = self._playlist.pop()
         return self._images[index]
-
 
     def _getEncouragement(self, cards: int) -> str:
         config = self._config["local"]

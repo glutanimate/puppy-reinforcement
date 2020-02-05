@@ -37,10 +37,7 @@ from aqt.reviewer import Reviewer
 from .config import config
 from .reinforcer import PuppyReinforcer
 
-try:
-    from typing import Any
-except ImportError:
-    from .libaddon._vendor.typing import Any
+from typing import Any
 
 
 def initializeViews(puppy_reinforcer: PuppyReinforcer):
