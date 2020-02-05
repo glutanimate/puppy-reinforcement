@@ -50,10 +50,7 @@ from ..errors import (
 )
 from .base import ConfigStorage
 
-try:
-    from typing import Optional
-except ImportError:
-    from ..._vendor.typing import Optional
+from typing import Optional
 
 __all__ = [
     "AnkiConfigStorage",

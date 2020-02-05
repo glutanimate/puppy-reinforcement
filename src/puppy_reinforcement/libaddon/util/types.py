@@ -31,10 +31,7 @@
 
 from pathlib import Path
 
-try:
-    from typing import Union
-except ImportError:
-    from .._vendor.typing import Union
+from typing import Union
 
 
 ListOrTuple = Union[list, tuple]

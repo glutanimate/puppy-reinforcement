@@ -42,10 +42,7 @@ from ...util.types import PathOrString
 from ..abstract.base import ConfigStorage
 from ..errors import ConfigError, ConfigNotReadyError, ConfigNotLoadedError
 
-try:
-    from typing import Optional
-except ImportError:
-    from ..._vendor.typing import Optional
+from typing import Optional
 
 __all__ = ["JSONConfigStorage"]
 

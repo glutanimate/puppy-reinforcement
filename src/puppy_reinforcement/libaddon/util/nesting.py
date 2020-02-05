@@ -36,11 +36,7 @@ Manipulation of nested data structures
 from functools import reduce
 from copy import deepcopy
 
-try:
-    from typing import Union, Any
-except ImportError:
-    from .._vendor.typing import Union, Any
-
+from typing import Union, Any
 
 # Utility functions for operating with nested objects
 

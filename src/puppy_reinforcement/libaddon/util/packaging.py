@@ -39,15 +39,9 @@ with Anki add-ons
 import os
 import sys
 
-try:
-    from types import ModuleType
-except ImportError:
-    from .._vendor.types import ModuleType
+from types import ModuleType
 
-try:
-    from typing import Optional
-except ImportError:
-    from .._vendor.typing import Optional
+from typing import Optional
 
 
 __all__ = ["importAny", "addPathToModuleLookup"]

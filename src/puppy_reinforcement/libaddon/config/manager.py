@@ -34,10 +34,7 @@ from .abstract.interface import ConfigInterface
 from .errors import ConfigError
 from .signals import ConfigSignals
 
-try:
-    from typing import List, Dict
-except ImportError:
-    from .._vendor.typing import List, Dict
+from typing import List, Dict
 
 
 class ConfigManager(ConfigInterface):

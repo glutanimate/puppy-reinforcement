@@ -3,10 +3,7 @@ from collections.abc import MutableMapping
 
 from ..signals import ConfigSignals
 
-try:
-    from typing import Any, Hashable
-except ImportError:
-    from ..._vendor.typing import Any, Hashable
+from typing import Any, Hashable
 
 
 class ConfigInterface(MutableMapping):

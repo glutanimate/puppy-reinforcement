@@ -43,10 +43,7 @@ from ..errors import ConfigNotLoadedError, ConfigError
 from ..signals import ConfigSignals
 from .interface import ConfigInterface
 
-try:
-    from typing import Any, Optional, Hashable
-except ImportError:
-    from ..._vendor.typing import Any, Optional, Hashable
+from typing import Any, Optional, Hashable
 
 
 __all__ = ["ConfigStorage"]

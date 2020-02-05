@@ -35,10 +35,7 @@ Utilities for semantic version comparisons
 
 from .._vendor.packaging import version
 
-try:
-    from typing import Optional
-except ImportError:
-    from .._vendor.typing import Optional
+from typing import Optional
 
 
 def checkVersion(current: str, lower: str, upper: Optional[str] = None) -> bool:
