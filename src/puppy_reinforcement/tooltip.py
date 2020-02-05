@@ -68,16 +68,16 @@ def dogTooltip(
     closeTooltip()
     aw = parent or mw.app.activeWindow() or mw
     lab = CustomLabel(
-        """\
+        f"""\
 <table cellpadding=10>
 <tr>
-<td><img height=%d src="%s"></td>
+<td><img height={image_height} src="{image_path}"></td>
 <td valign="middle">
-    <center><b>%i cards done so far!</b><br>%s</center>
+    <center><b>{count} {'cards' if count > 1 else 'card'} done so far!</b><br>
+    {encouragement}</center>
 </td>
 </tr>
-</table>"""
-        % (image_height, image_path, count, encouragement),
+</table>""",
         aw,
     )
     lab.setFrameStyle(QFrame.Panel)
