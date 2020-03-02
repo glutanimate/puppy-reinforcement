@@ -16,7 +16,7 @@ If you enjoy Puppy Reinforcement, please consider supporting my work on Patreon,
 
 ### [Download](https://github.com/glutanimate/puppy-reinforcement/releases/tag/v1.0.0)
 
-It took them a while to waddle up the version step with their tiny legs, but the puppies are finally here! Here is everything that's new in Puppy Reinforcement v1.0.0:
+It took them a while to waddle up the version steps with their tiny legs, but your friendly neighborhood puppies are finally here! Here is everything that's new in **Puppy Reinforcement v1.0.0**:
 
 ### Added
 

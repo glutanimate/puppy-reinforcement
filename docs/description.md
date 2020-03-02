@@ -10,6 +10,8 @@ The following video is a bit outdated, but it does go over the use and configura
 
 [![YouTube: Anki add-on guide: Gamify Your Reviews](https://i.ytimg.com/vi/UkveLkAgXiM/mqdefault.jpg)](https://youtu.be/UkveLkAgXiM)
 
+<!-- CHANGELOG -->
+
 ### FEATURES (compared to similar add-ons)
 
 - Uses tooltips instead of a separate window
@@ -32,8 +34,6 @@ Please note that only files placed in the "user_files" directory will persist ac
 **Enabling puppies for adding cards**
 
 You can enable the add-on for adding cards by heading to the add-on's configuration window (under Tools → Add-ons → Puppy Reinforcement → Config", and then changing "count_adding" from "false" to "true". The changes will apply after restarting Anki.
-
-<!-- CHANGELOG -->
 
 <!-- SUPPORT -->
 
