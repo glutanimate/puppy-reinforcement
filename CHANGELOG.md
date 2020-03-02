@@ -16,7 +16,9 @@ If you enjoy Puppy Reinforcement, please consider supporting my work on Patreon,
 
 ### [Download](https://github.com/glutanimate/puppy-reinforcement/releases/tag/v1.0.0)
 
-It took them a while to waddle up the version step with their tiny legs, but the Anki puppies are finally here for 2.1! But Anki 2.1 support is not all, here is what's new!:
+It took them a while to waddle up the version step with their tiny legs, but the puppies are finally here! Here is everything that's new in Puppy Reinforcement v1.0.0:
+
+![](https://raw.githubusercontent.com/glutanimate/puppy-reinforcement/master/screenshots/addcards.gif)
 
 ### Added
 

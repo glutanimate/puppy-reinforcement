@@ -2,11 +2,11 @@
 
 Uses **intermittent reinforcement** with **cute puppies** to encourage card review streaks.
 
-![](https://raw.githubusercontent.com/glutanimate/puppy-reinforcement/master/screenshots/screenshot.png)
+![](https://raw.githubusercontent.com/glutanimate/puppy-reinforcement/master/screenshots/reviewer.gif)
 
 ### USAGE
 
-The customization and use of the Puppy Reinforcement add-on is demonstrated in the following video (alongside other similar add-ons):
+The following video is a bit outdated, but it does go over the use and configuration of Puppy Reinforcement (including a number of other add-ons that help gamify Anki):
 
 [![YouTube: Anki add-on guide: Gamify Your Reviews](https://i.ytimg.com/vi/UkveLkAgXiM/mqdefault.jpg)](https://youtu.be/UkveLkAgXiM)
 
@@ -19,7 +19,7 @@ The customization and use of the Puppy Reinforcement add-on is demonstrated in t
 
 ### CONFIGURATION
 
-The configuration can be customized by either using Anki 2.1's inbuilt add-on configuration screen (*Tools* → *Add-ons* → select *Puppy Reinforcement* → click on *Config*), or by manually editing the corresponding config keys in `puppy_reinforcer/meta.json` in Anki's add-on folder (Anki 2.0) [the config.json file contains the default values and **should not be modified**.].
+You can customize Puppy Reinforcement by heading to *Tools* → *Add-ons* , selecting *Puppy Reinforcement*, and then clicking on *Config*. Please note that you might have to restart Anki for some of the options to apply.
 
 <!-- CHANGELOG -->
 
