@@ -10,14 +10,15 @@ The following video is a bit outdated, but it does go over the use and configura
 
 [![YouTube: Anki add-on guide: Gamify Your Reviews](https://i.ytimg.com/vi/UkveLkAgXiM/mqdefault.jpg)](https://youtu.be/UkveLkAgXiM)
 
-<!-- CHANGELOG -->
-
 ### FEATURES (compared to similar add-ons)
 
 - Uses tooltips instead of a separate window
 - The puppies are spread intermittently through your reviews. By default they will appear around every 10 cards (some take longer than others). You can customize this by editing the add-on)
 - Customizable encouragement messages that change based on the card tally
-- Removed cats and other non-puppies
+- Removed cats and other non-puppies (but you can add your own images, see below!)
+- Super customizable in all respects you can imagine (frequency, duration, tooltip size, position, color, etc.)
+
+<!-- CHANGELOG -->
 
 ### CONFIGURATION
 
