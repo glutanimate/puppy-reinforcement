@@ -12,6 +12,10 @@ If you enjoy Puppy Reinforcement, please consider supporting my work on Patreon,
 
 ## [Unreleased]
 
+## [1.1.0-beta.1] - 2020-03-02
+
+### [Download](https://github.com/glutanimate/puppy-reinforcement/releases/tag/v1.1.0-beta.1)
+
 ### Added
 
 - The tooltip position is now fully customizable, both horizontally and vertically (thanks to eotini23 on Patreon for the idea!)
