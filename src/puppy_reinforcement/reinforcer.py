@@ -33,7 +33,7 @@
 import random
 import re
 from pathlib import Path
-from typing import List
+from typing import List, Optional
 
 from aqt.main import AnkiQt
 
@@ -57,6 +57,7 @@ class PuppyReinforcer:
             "last": 0,
             "enc": None,
             "ivl": self._config["local"]["encourage_every"],
+            "cutoff": False,
         }
 
         self._readImages()
@@ -64,7 +65,11 @@ class PuppyReinforcer:
         self._shufflePlaylist()
 
     def showDog(self, *args, **kwargs):
-        config = self._config["local"]
+        local_config = self._config["local"]
+
+        if local_config["reset_counter_on_new_day"]:
+            self._maybeResetCount()
+
         self._state["cnt"] += 1
         if self._state["cnt"] != self._state["last"] + self._state["ivl"]:
             return
@@ -74,19 +79,19 @@ class PuppyReinforcer:
         # intermittent reinforcement:
         self._state["ivl"] = max(
             1,
-            config["encourage_every"]
-            + random.randint(-config["max_spread"], config["max_spread"]),
+            local_config["encourage_every"]
+            + random.randint(-local_config["max_spread"], local_config["max_spread"]),
         )
         self._state["last"] = self._state["cnt"]
 
     def _showTooltip(self, encouragement: str, image_path: str):
-        config = self._config["local"]
+        local_config = self._config["local"]
         count = self._state["cnt"]
 
         html = f"""\
 <table cellpadding=10>
 <tr>
-<td><img height={config["image_height"]} src="{image_path}"></td>
+<td><img height={local_config["image_height"]} src="{image_path}"></td>
 <td valign="middle">
     <center><b>{count} {'cards' if count > 1 else 'card'} done so far!</b><br>
     {encouragement}</center>
@@ -97,13 +102,13 @@ class PuppyReinforcer:
         notification = Notification(
             html,
             self._mw.progress,
-            duration=config["duration"],
-            align_horizontal=config["tooltip_align_horizontal"],
-            align_vertical=config["tooltip_align_vertical"],
-            space_horizontal=config["tooltip_space_horizontal"],
-            space_vertical=config["tooltip_space_vertical"],
-            bg_color=config["tooltip_color"],
-            parent=self._mw.app.activeWindow() or self._mw
+            duration=local_config["duration"],
+            align_horizontal=local_config["tooltip_align_horizontal"],
+            align_vertical=local_config["tooltip_align_vertical"],
+            space_horizontal=local_config["tooltip_space_horizontal"],
+            space_vertical=local_config["tooltip_space_vertical"],
+            bg_color=local_config["tooltip_color"],
+            parent=self._mw.app.activeWindow() or self._mw,
         )
 
         notification.show()
@@ -129,6 +134,28 @@ class PuppyReinforcer:
 
         return images
 
+    def _maybeResetCount(self):
+        """
+        Reset on day cutoff traversal
+        """
+        cutoff = self._getDayCutoff()
+
+        if self._state["cutoff"] is False:
+            # initial value, only available after profile load
+            self._state["cutoff"] = cutoff
+        elif self._state["cutoff"] == cutoff:
+            return
+
+        self._state["cnt"] = 0
+        self._state["cutoff"] == cutoff
+
+    def _getDayCutoff(self) -> Optional[int]:
+        # being defensive against intermittent null state on mw.col
+        try:
+            return self._mw.col.sched.dayCutoff
+        except AttributeError:
+            return None
+
     def _rebuildPlaylist(self):
         self._playlist = list(range(len(self._images)))
 
@@ -145,16 +172,16 @@ class PuppyReinforcer:
         return self._images[index]
 
     def _getEncouragement(self, cards: int) -> str:
-        config = self._config["local"]
+        local_config = self._config["local"]
         last = self._state["enc"]
-        if cards >= config["limit_max"]:
-            lst = list(config["encouragements"]["max"])
-        elif cards >= config["limit_high"]:
-            lst = list(config["encouragements"]["high"])
-        elif cards >= config["limit_middle"]:
-            lst = list(config["encouragements"]["middle"])
+        if cards >= local_config["limit_max"]:
+            lst = list(local_config["encouragements"]["max"])
+        elif cards >= local_config["limit_high"]:
+            lst = list(local_config["encouragements"]["high"])
+        elif cards >= local_config["limit_middle"]:
+            lst = list(local_config["encouragements"]["middle"])
         else:
-            lst = list(config["encouragements"]["low"])
+            lst = list(local_config["encouragements"]["low"])
         if last and last in lst:
             # skip identical encouragement
             lst.remove(last)
