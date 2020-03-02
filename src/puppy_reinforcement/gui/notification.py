@@ -49,6 +49,8 @@ class Notification(QLabel):
 
     _current_timer: Optional[QTimer] = None
     _current_instance: Optional["Notification"] = None
+    
+    silentlyClose = True
 
     def __init__(
         self,
