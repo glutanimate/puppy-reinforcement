@@ -49,7 +49,7 @@ class Notification(QLabel):
 
     _current_timer: Optional[QTimer] = None
     _current_instance: Optional["Notification"] = None
-    
+
     silentlyClose = True
 
     def __init__(
@@ -94,20 +94,12 @@ class Notification(QLabel):
         evt.accept()
         self.hide()
 
-    @classmethod
-    def _closeSingleton(cls):
-        if cls._current_instance:
-            try:
-                cls._current_instance.deleteLater()
-            except:  # noqa: E722
-                # already deleted as parent window closed
-                pass
-            cls._current_instance = None
-        if cls._current_timer:
-            cls._current_timer.stop()
-            cls._current_timer = None
+    def resizeEvent(self, event: QResizeEvent) -> None:
+        # true geometry is only known once resizeEvent fires
+        self._setPosition()
+        super().resizeEvent(event)
 
-    def _positionTooltip(self):
+    def _setPosition(self):
         align_horizontal = self._align_horizontal
         align_vertical = self._align_vertical
 
@@ -133,7 +125,15 @@ class Notification(QLabel):
             self.parent().mapToGlobal(QPoint(x, y))  # type:ignore
         )
 
-    def resizeEvent(self, event: QResizeEvent) -> None:
-        # true geometry is only known when resizeEvent fires
-        self._positionTooltip()
-        super().resizeEvent(event)
+    @classmethod
+    def _closeSingleton(cls):
+        if cls._current_instance:
+            try:
+                cls._current_instance.deleteLater()
+            except:  # noqa: E722
+                # already deleted as parent window closed
+                pass
+            cls._current_instance = None
+        if cls._current_timer:
+            cls._current_timer.stop()
+            cls._current_timer = None
