@@ -44,7 +44,8 @@ def initializeViews(puppy_reinforcer: PuppyReinforcer):
     try:
         from aqt.gui_hooks import reviewer_did_answer_card, add_cards_did_add_note
 
-        reviewer_did_answer_card.append(puppy_reinforcer.showDog)
+        if config["local"]["count_reviewing"]:
+            reviewer_did_answer_card.append(puppy_reinforcer.showDog)
         if config["local"]["count_adding"]:
             add_cards_did_add_note.append(puppy_reinforcer.showDog)
 
@@ -67,6 +68,7 @@ def initializeViews(puppy_reinforcer: PuppyReinforcer):
                 puppy_reinforcer.showDog()
             return ret
 
-        Reviewer._answerCard = wrap(Reviewer._answerCard, _myAnswerCard, "around")
+        if config["local"]["count_reviewing"]:
+            Reviewer._answerCard = wrap(Reviewer._answerCard, _myAnswerCard, "around")
         if config["local"]["count_adding"]:
             AddCards.addNote = wrap(AddCards.addNote, myAddNote, "around")

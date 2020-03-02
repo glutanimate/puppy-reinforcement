@@ -8,6 +8,7 @@
     "limit_high": 50,
     "limit_middle": 25,
     "count_adding": false,
+    "count_reviewing": true,
     "disable_default_images": false,
     "encouragements": {
         "low": ["Great job!", "Keep it up!", "Way to go!", "Keep up the good work!"],

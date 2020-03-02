@@ -1,15 +1,18 @@
 **Puppy Reinforcement** supports the following config values:
 
-- `count_adding` [bool]: count adding notes as well; default: `false`
-- `duration` [int]: duration in msec; default: `3000`
-- `encourage_every` [int]: show encouragement about every n cards; default: `10`
-- `encouragements` [dict]: encouragements by level
-- `image_height` [int]: image height in px, tooltip is automatically scaled; default: `128`
-- `limit_high` [int]: lower card limit for high encouragement level; defaults: `50`
-- `limit_max` [int]: lower card limit for max encouragement level; defaults: `100`
-- `limit_middle` [int]: lower card limit for middle encouragement level; defaults: `25`
-- `max_spread` [int]: max spread around interval; default: `5`
-- `tooltip_color` [string]: HTML color code; default: `#AFFFC5` (light green)
+<div style="color: #ff8080; font-weight: bold;">Please note that you will have to restart Anki for some of these options to apply (e.g. toggling the add-on for reviews / adding cards)</div>
+
+- **count_adding** [true/false]: count added cards towards puppy tally; default: `false`
+- **count_reviewing** [true/false]: count reviews towards puppy tally; default: `true`
+- **duration** [integer]: duration in msec; default: `3000`
+- **encourage_every** [integer]: show encouragement about every n cards; default: `10`
+- **encouragements** [dict]: encouragements by level
+- **image_height** [integer]: image height in px, tooltip is automatically scaled; default: `128`
+- **limit_high** [integer]: lower card limit for high encouragement level; defaults: `50`
+- **limit_max** [integer]: lower card limit for max encouragement level; defaults: `100`
+- **limit_middle** [integer]: lower card limit for middle encouragement level; defaults: `25`
+- **max_spread** [integer]: max spread around interval; default: `5`
+- **tooltip_color** [string]: HTML color code; default: `#AFFFC5` (light green)
 
 ---
 
