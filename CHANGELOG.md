@@ -18,9 +18,9 @@ If you enjoy Puppy Reinforcement, please consider supporting my work on Patreon,
 
 It took them a while to waddle up the version step with their tiny legs, but the puppies are finally here! Here is everything that's new in Puppy Reinforcement v1.0.0:
 
-![](https://raw.githubusercontent.com/glutanimate/puppy-reinforcement/master/screenshots/addcards.gif)
-
 ### Added
+
+![](https://raw.githubusercontent.com/glutanimate/puppy-reinforcement/master/screenshots/addcards.gif)
 
 - Anki 2.1 compatibility (thanks to @zjosua for his help with this!, #77)
 - Optional support for showing puppies while creating new cards. Controlled by the `count_adding` option in the settings (thanks to @zjosua for the implementation and /u/xTheKezio / @ijgnd for the idea, #12)
