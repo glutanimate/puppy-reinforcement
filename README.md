@@ -1,4 +1,4 @@
-<p align="center"><img src="screenshots/screenshot.png" height=500></p>
+<p align="center"><img src="screenshots/reviewer.gif" height=500></p>
 
 <h2 align="center">Puppy Reinforcement for Anki</h2>
 
