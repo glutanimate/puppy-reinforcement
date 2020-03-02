@@ -32,7 +32,7 @@
 # Any modifications to this file must keep this entire header intact.
 
 """
-Puppy tooltip
+Customizable notification pop-up
 """
 
 
