@@ -30,14 +30,14 @@
 #
 # Any modifications to this file must keep this entire header intact.
 
+from typing import Any
+
 from anki.hooks import wrap
 from aqt.addcards import AddCards
 from aqt.reviewer import Reviewer
 
 from .config import config
 from .reinforcer import PuppyReinforcer
-
-from typing import Any
 
 
 def initializeViews(puppy_reinforcer: PuppyReinforcer):

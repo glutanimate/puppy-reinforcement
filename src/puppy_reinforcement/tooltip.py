@@ -35,13 +35,13 @@ Puppy tooltip
 """
 
 
-from PyQt5.QtCore import QPoint, QTimer, Qt
+from typing import Optional
+
+from PyQt5.QtCore import QPoint, Qt, QTimer
 from PyQt5.QtGui import QColor, QMouseEvent, QPalette
 from PyQt5.QtWidgets import QFrame, QLabel, QWidget
 
 from aqt import mw
-
-from typing import Optional
 
 
 class CustomLabel(QLabel):

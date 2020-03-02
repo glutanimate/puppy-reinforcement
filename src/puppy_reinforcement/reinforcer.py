@@ -33,15 +33,13 @@
 import random
 import re
 from pathlib import Path
+from typing import List
 
 from aqt.main import AnkiQt
 
-from .tooltip import dogTooltip
-
-from .libaddon.platform import PATH_THIS_ADDON, pathUserFiles
 from .libaddon.anki.configmanager import ConfigManager
-
-from typing import List
+from .libaddon.platform import PATH_THIS_ADDON, pathUserFiles
+from .tooltip import dogTooltip
 
 
 class PuppyReinforcer:
