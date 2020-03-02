@@ -39,7 +39,7 @@ from aqt.main import AnkiQt
 
 from .libaddon.anki.configmanager import ConfigManager
 from .libaddon.platform import PATH_THIS_ADDON, pathUserFiles
-from .tooltip import Notification
+from .notification import Notification
 
 
 class PuppyReinforcer:
