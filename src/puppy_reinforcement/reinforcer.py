@@ -39,7 +39,7 @@ from aqt.main import AnkiQt
 
 from .libaddon.anki.configmanager import ConfigManager
 from .libaddon.platform import PATH_THIS_ADDON, pathUserFiles
-from .tooltip import dogTooltip
+from .tooltip import Notification
 
 
 class PuppyReinforcer:
@@ -81,14 +81,32 @@ class PuppyReinforcer:
 
     def _showTooltip(self, encouragement: str, image_path: str):
         config = self._config["local"]
-        dogTooltip(
-            encouragement,
-            image_path,
-            self._state["cnt"],
-            config["image_height"],
-            config["tooltip_color"],
-            config["duration"],
+        count = self._state["cnt"]
+
+        html = f"""\
+<table cellpadding=10>
+<tr>
+<td><img height={config["image_height"]} src="{image_path}"></td>
+<td valign="middle">
+    <center><b>{count} {'cards' if count > 1 else 'card'} done so far!</b><br>
+    {encouragement}</center>
+</td>
+</tr>
+</table>"""
+
+        notification = Notification(
+            html,
+            self._mw.progress,
+            duration=config["duration"],
+            align_horizontal=config["tooltip_align_horizontal"],
+            align_vertical=config["tooltip_align_vertical"],
+            space_horizontal=config["tooltip_space_horizontal"],
+            space_vertical=config["tooltip_space_vertical"],
+            bg_color=config["tooltip_color"],
+            parent=self._mw.app.activeWindow() or self._mw
         )
+
+        notification.show()
 
     def _readImages(self):
         default_path = Path(PATH_THIS_ADDON) / "images"

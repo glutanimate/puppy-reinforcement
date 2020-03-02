@@ -13,6 +13,10 @@
 - **limit_middle** [integer]: lower card limit for middle encouragement level; defaults: `25`
 - **max_spread** [integer]: max spread around interval; default: `5`
 - **tooltip_color** [string]: HTML color code; default: `#AFFFC5` (light green)
+- **tooltip_align_vertical** [enum]: controls vertical screen position at which tooltips will pop up. You can select between: `top`, `center` and `bottom`. Default: `bottom`.
+- **tooltip_align_horizontal** [enum]: controls vertical screen position at which tooltips will pop up. You can select between: `right`, `center` and `left`. Default: `left`.
+- **tooltip_space_vertical** [integer]: allows you to fine-tune the tooltip position by specifying a distance between the tooltip and the top/bottom edge of Anki. Only applies when selecting `top` or `bottom` as `tooltip_align_vertical`. Default: `100`.
+- **tooltip_space_horizontal** [integer]: allows you to fine-tune the tooltip position by specifying a distance between the tooltip and the left/right edge of Anki. Only applies when selecting `left` or `right` as `tooltip_align_horizontal`. Default: `0`.
 
 ---
 
