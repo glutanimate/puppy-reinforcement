@@ -30,7 +30,7 @@
 #
 # Any modifications to this file must keep this entire header intact.
 
-from anki.hooks import wrap
+from anki.hooks import addHook, wrap
 from aqt.addcards import AddCards
 from aqt.reviewer import Reviewer
 
@@ -42,9 +42,10 @@ from typing import Any
 
 def initializeViews(puppy_reinforcer: PuppyReinforcer):
     try:
-        from aqt.gui_hooks import reviewer_did_answer_card, add_cards_did_add_note
+        from aqt.gui_hooks import reviewer_did_answer_card, add_cards_did_add_note, review_did_undo
 
         reviewer_did_answer_card.append(puppy_reinforcer.showDog)
+        review_did_undo.append(puppy_reinforcer.undoReview)
         if config["local"]["count_adding"]:
             add_cards_did_add_note.append(puppy_reinforcer.showDog)
 
@@ -68,5 +69,6 @@ def initializeViews(puppy_reinforcer: PuppyReinforcer):
             return ret
 
         Reviewer._answerCard = wrap(Reviewer._answerCard, _myAnswerCard, "around")
+        addHook("revertedCard", puppy_reinforcer.undoReview)
         if config["local"]["count_adding"]:
             AddCards.addNote = wrap(AddCards.addNote, myAddNote, "around")
