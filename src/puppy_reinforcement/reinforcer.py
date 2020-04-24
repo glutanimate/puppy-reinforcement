@@ -81,6 +81,10 @@ class PuppyReinforcer:
         )
         self._state["last"] = self._state["cnt"]
 
+    def undoReview(self, card_id):
+        """Decrease count when a review is reverted."""
+        self._state["cnt"] -= 1
+
     def _showTooltip(self, encouragement: str, image_path: str):
         config = self._config["local"]
         dogTooltip(
