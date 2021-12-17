@@ -33,6 +33,8 @@
 import random
 import re
 from pathlib import Path
+import pickle
+import os
 
 from aqt.main import AnkiQt
 
@@ -52,7 +54,7 @@ class PuppyReinforcer:
         self._mw = mw
         self._config = config
         self._images: List[str] = []
-        self._playlist: List[int] = []  # self._images indexes
+        self._playlist_path = Path(PATH_THIS_ADDON) / "playlist.pkl"
 
         self._state = {
             "cnt": 0,
@@ -60,10 +62,6 @@ class PuppyReinforcer:
             "enc": None,
             "ivl": self._config["local"]["encourage_every"],
         }
-
-        self._readImages()
-        self._rebuildPlaylist()
-        self._shufflePlaylist()
 
     def showDog(self, *args, **kwargs):
         config = self._config["local"]
@@ -111,22 +109,36 @@ class PuppyReinforcer:
 
         self._images = images
 
-        return images
+    def _readPlaylist(self):
+        images = []
+        try:
+            with open(self._playlist_path, "rb") as handle:
+                images = pickle.load(handle)
+        except Exception:
+            pass
+
+        self._images = images
+
+    def _savePlaylist(self):
+        with open(self._playlist_path, "wb") as handle:
+            pickle.dump(self._images, handle)
 
     def _rebuildPlaylist(self):
-        self._playlist = list(range(len(self._images)))
-
-    def _shufflePlaylist(self):
-        random.shuffle(self._playlist)
+        self._readImages()
+        random.shuffle(self._images)
 
     def _getNextImage(self) -> str:
-        try:
-            index = self._playlist.pop()
-        except IndexError:
+        if not self._images:
+            self._readPlaylist()
+        if not self._images:
             self._rebuildPlaylist()
-            self._shufflePlaylist()
-            index = self._playlist.pop()
-        return self._images[index]
+        img = ""
+        while self._images:
+            img = self._images.pop()
+            if os.path.isfile(img):
+                break
+        self._savePlaylist()
+        return img
 
     def _getEncouragement(self, cards: int) -> str:
         config = self._config["local"]
