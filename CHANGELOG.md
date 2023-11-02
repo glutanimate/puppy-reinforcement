@@ -12,6 +12,24 @@ If you enjoy Puppy Reinforcement, please consider supporting my work on Patreon,
 
 ## [Unreleased]
 
+## [1.1.0-beta.1] - 2020-03-02
+
+### [Download](https://github.com/glutanimate/puppy-reinforcement/releases/tag/v1.1.0-beta.1)
+
+### Added
+
+- The tooltip position is now fully customizable, both horizontally and vertically (thanks to eotini23 on Patreon for the idea!)
+- Add option to disable tooltips while reviewing cards (thanks to Jamie on Patreon for the idea!)
+- Add option to reset the counter once a new day starts (thanks to p4nix on Patreon for the idea!)
+
+### Fixed
+
+- Suppress warning on unclosed windows
+
+### Changed
+
+- Rewrote notification/tooltip module from scratch, paving the way for the new features listed above, and many more to come!
+
 ## [1.0.0] - 2020-03-02
 
 ### [Download](https://github.com/glutanimate/puppy-reinforcement/releases/tag/v1.0.0)
