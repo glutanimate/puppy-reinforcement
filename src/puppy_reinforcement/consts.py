@@ -34,20 +34,12 @@ Addon-wide constants
 """
 
 from ._version import __version__
-from .libaddon.platform import checkAnkiVersion
-
-try:
-    from .data.patrons import MEMBERS_CREDITED, MEMBERS_TOP  # type:ignore
-except ImportError:
-    MEMBERS_CREDITED = MEMBERS_TOP = ()
 
 __all__ = ["ADDON"]
 
-USES_LEGACY_HOOKS = not checkAnkiVersion("2.1.20")
-
 # PROPERTIES DESCRIBING ADDON
 
-class ADDON(object):
+class ADDON:
     """Class storing general add-on properties
     Property names need to be all-uppercase with no leading underscores
     """
@@ -68,8 +60,6 @@ class ADDON(object):
     LIBRARIES = ()
     CONTRIBUTORS = ("zjosua",)
     SPONSORS = ()
-    MEMBERS_CREDITED = MEMBERS_CREDITED  # type:ignore
-    MEMBERS_TOP = MEMBERS_TOP  # type:ignore
     LINKS = {
         "patreon": "https://www.patreon.com/glutanimate",
         "bepatron": "https://www.patreon.com/bePatron?u=7522179",

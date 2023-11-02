@@ -30,12 +30,15 @@
 #
 # Any modifications to this file must keep this entire header intact.
 
+from typing import TYPE_CHECKING
+
 import random
 import re
 from pathlib import Path
 from typing import List, Optional
 
-from aqt.main import AnkiQt
+if TYPE_CHECKING:
+    from aqt.main import AnkiQt
 
 from .libaddon.anki.configmanager import ConfigManager
 from .libaddon.platform import PATH_THIS_ADDON, pathUserFiles
@@ -43,10 +46,9 @@ from .gui.notification import Notification
 
 
 class PuppyReinforcer:
-
     _extensions = re.compile(r"\.(jpg|jpeg|png|bmp|gif)$")
 
-    def __init__(self, mw: AnkiQt, config: ConfigManager):
+    def __init__(self, mw: "AnkiQt", config: ConfigManager):
         self._mw = mw
         self._config = config
         self._images: List[str] = []
@@ -60,22 +62,22 @@ class PuppyReinforcer:
             "cutoff": False,
         }
 
-        self._readImages()
-        self._rebuildPlaylist()
-        self._shufflePlaylist()
+        self._read_images()
+        self._rebuild_playlist()
+        self._shuffle_playlist()
 
-    def showDog(self, *args, **kwargs):
+    def show_dog(self, *args, **kwargs):
         local_config = self._config["local"]
 
         if local_config["reset_counter_on_new_day"]:
-            self._maybeResetCount()
+            self._maybe_reset_count()
 
         self._state["cnt"] += 1
         if self._state["cnt"] != self._state["last"] + self._state["ivl"]:
             return
-        image_path = self._getNextImage()
-        encouragement = self._getEncouragement(self._state["cnt"])
-        self._showTooltip(encouragement, image_path)
+        image_path = self._get_next_image()
+        encouragement = self._get_encouragement(self._state["cnt"])
+        self._show_tooltip(encouragement, image_path)
         # intermittent reinforcement:
         self._state["ivl"] = max(
             1,
@@ -84,7 +86,7 @@ class PuppyReinforcer:
         )
         self._state["last"] = self._state["cnt"]
 
-    def _showTooltip(self, encouragement: str, image_path: str):
+    def _show_tooltip(self, encouragement: str, image_path: str):
         local_config = self._config["local"]
         count = self._state["cnt"]
 
@@ -113,7 +115,7 @@ class PuppyReinforcer:
 
         notification.show()
 
-    def _readImages(self):
+    def _read_images(self):
         default_path = Path(PATH_THIS_ADDON) / "images"
         user_path = Path(pathUserFiles())
 
@@ -134,11 +136,11 @@ class PuppyReinforcer:
 
         return images
 
-    def _maybeResetCount(self):
+    def _maybe_reset_count(self):
         """
         Reset on day cutoff traversal
         """
-        cutoff = self._getDayCutoff()
+        cutoff = self._get_day_cutoff()
 
         if self._state["cutoff"] is False:
             # initial value, only available after profile load
@@ -149,29 +151,29 @@ class PuppyReinforcer:
         self._state["cnt"] = 0
         self._state["cutoff"] == cutoff
 
-    def _getDayCutoff(self) -> Optional[int]:
+    def _get_day_cutoff(self) -> Optional[int]:
         # being defensive against intermittent null state on mw.col
         try:
             return self._mw.col.sched.dayCutoff
         except AttributeError:
             return None
 
-    def _rebuildPlaylist(self):
+    def _rebuild_playlist(self):
         self._playlist = list(range(len(self._images)))
 
-    def _shufflePlaylist(self):
+    def _shuffle_playlist(self):
         random.shuffle(self._playlist)
 
-    def _getNextImage(self) -> str:
+    def _get_next_image(self) -> str:
         try:
             index = self._playlist.pop()
         except IndexError:
-            self._rebuildPlaylist()
-            self._shufflePlaylist()
+            self._rebuild_playlist()
+            self._shuffle_playlist()
             index = self._playlist.pop()
         return self._images[index]
 
-    def _getEncouragement(self, cards: int) -> str:
+    def _get_encouragement(self, cards: int) -> str:
         local_config = self._config["local"]
         last = self._state["enc"]
         if cards >= local_config["limit_max"]:

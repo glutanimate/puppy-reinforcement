@@ -83,11 +83,11 @@ class Notification(QLabel):
 
     def show(self) -> None:
         # TODO: drop dependency on mw
-        Notification._closeSingleton()
+        Notification._close_singleton()
         super().show()
         Notification._current_instance = self
         Notification._current_timer = self._progress_manager.timer(
-            3000, Notification._closeSingleton, False
+            3000, Notification._close_singleton, False
         )
 
     def mousePressEvent(self, evt: QMouseEvent):
@@ -96,10 +96,10 @@ class Notification(QLabel):
 
     def resizeEvent(self, event: QResizeEvent) -> None:
         # true geometry is only known once resizeEvent fires
-        self._setPosition()
+        self._set_position()
         super().resizeEvent(event)
 
-    def _setPosition(self):
+    def _set_position(self):
         align_horizontal = self._align_horizontal
         align_vertical = self._align_vertical
 
@@ -122,11 +122,11 @@ class Notification(QLabel):
             raise ValueError(f"Alignment value {align_vertical} is not supported")
 
         self.move(
-            self.parent().mapToGlobal(QPoint(x, y))  # type:ignore
+            self.parent().mapToGlobal(QPoint(x, y))
         )
 
     @classmethod
-    def _closeSingleton(cls):
+    def _close_singleton(cls):
         if cls._current_instance:
             try:
                 cls._current_instance.deleteLater()
