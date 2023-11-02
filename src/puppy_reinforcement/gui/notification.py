@@ -130,7 +130,7 @@ class Notification(QLabel):
         else:
             raise ValueError(f"Alignment value {align_vertical} is not supported")
 
-        self.move(parent.mapToGlobal(QPoint(x, y)))
+        self.move(parent.mapToGlobal(QPoint(int(x), int(y))))
 
     def _parent(self) -> QWidget:  # pyqt stubs workaround
         return cast(QWidget, self.parent())
