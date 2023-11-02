@@ -43,6 +43,15 @@ This module is the package entry-point.
 
 from ._version import __version__  # noqa: F401
 
+
+def maybeVendorTyping():
+    try:
+        import typing  # noqa: F401
+        import types  # noqa: F401
+    except ImportError:
+        registerLegacyVendorDir()
+
+
 def registerLegacyVendorDir():
     """Some modules like "typing" cannot be properly vendorized, so fall back
     to hacky sys.path modifications if necessary
@@ -52,3 +61,49 @@ def registerLegacyVendorDir():
     import os
 
     sys.path.insert(0, os.path.join(os.path.dirname(__file__), "_vendor_legacy"))
+
+
+def checkFor2114ImportError(name: str) -> bool:
+    try:
+        # litmus test for Anki import bug
+        from .platform import anki_version  # noqa: F401
+
+        return True
+    except ImportError:
+        # Disable add-on and inform user of the bug
+        from aqt.utils import showWarning
+        from aqt import mw
+        from anki import version as anki_version
+
+        if mw is None:
+            return False
+
+        mw.addonManager.toggleEnabled(__name__, enable=False)
+
+        bug = "https://anki.tenderapp.com/discussions/ankidesktop/34836"
+        downloads = "https://apps.ankiweb.net#download"
+        vers = "2.1.15"
+        title = "Warning: {name} disabled".format(name=name)
+        msg = (
+            "<b>WARNING</b>: {name} had to be disabled because the "
+            "version of Anki that is currently installed on your system "
+            "({anki_version}) is incompatible with the add-on.<br><br> "
+            "Earlier releases of Anki like this one "
+            "suffer from a <a href='{bug}'>bug</a> that breaks "
+            "{name} and many other add-ons on your system. "
+            "In order to fix this you will have to update Anki "
+            "to version <a href='{downloads}'>{vers} or higher</a>.<br><br>"
+            "After updating Anki, please re-enable "
+            "{name} by heading to Tools → Add-ons, selecting the "
+            "add-on, and clicking <i>Toggle Enabled</i>.".format(
+                name=name,
+                anki_version=anki_version,
+                bug=bug,
+                vers=vers,
+                downloads=downloads,
+            )
+        )
+
+        showWarning(msg, title=title, textFormat="rich")
+
+        return False
