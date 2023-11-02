@@ -1,15 +1,14 @@
 {
-    "display_name": "Puppy Reinforcement",
-    "module_name": "puppy_reinforcement",
-    "repo_name": "puppy-reinforcement",
-    "ankiweb_id": "1722658993",
-    "author": "Glutanimate",
-    "contact": "https://glutanimate.com",
-    "homepage": "https://github.com/glutanimate/puppy-reinforcement",
-    "copyright_start": 2016,
-    "tags": "reviewer conditioning reinforcement gamification doggos",
-    "conflicts": [],
-    "targets": [
-        "anki21"
-    ]
+  "display_name": "Puppy Reinforcement",
+  "module_name": "puppy_reinforcement",
+  "repo_name": "puppy-reinforcement",
+  "ankiweb_id": "1722658993",
+  "author": "Glutanimate",
+  "contact": "https://glutanimate.com",
+  "homepage": "https://github.com/glutanimate/puppy-reinforcement",
+  "copyright_start": 2016,
+  "tags": "reviewer conditioning reinforcement gamification doggos",
+  "conflicts": [],
+  "targets": ["anki21"],
+  "min_anki_version": "2.1.49"
 }
