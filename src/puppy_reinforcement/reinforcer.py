@@ -149,7 +149,7 @@ class PuppyReinforcer:
             return
 
         self._state["cnt"] = 0
-        self._state["cutoff"] == cutoff
+        self._state["cutoff"] = cutoff
 
     def _get_day_cutoff(self) -> Optional[int]:
         # being defensive against intermittent null state on mw.col
