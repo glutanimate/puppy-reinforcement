@@ -2,7 +2,8 @@
 
 # Libaddon for Anki
 #
-# Copyright (C) 2018-2019  Aristotelis P. <https//glutanimate.com/>
+# Copyright (C) 2018-2020  Aristotelis P. <https//glutanimate.com/>
+# Copyright (C) 2020 Ankitects Pty Ltd and contributors
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -30,15 +31,18 @@
 # Any modifications to this file must keep this entire header intact.
 
 """
-Libaddon: A helper library for Anki add-on development
-
-Provides access to a number of commonly used modules shared across
-many of my add-ons.
-
-Please note that this package is not fit for general use yet, as it is
-still is too specific to my own add-ons and implementations.
-
-This module is the package entry-point.
+Helpers to mediate signal/slot handlign in PyQt
 """
 
-from ._version import __version__  # noqa: F401
+from typing import Callable, Union
+
+from aqt.qt import pyqtSignal, pyqtBoundSignal
+
+
+def qconnect(signal: Union[Callable, pyqtSignal, pyqtBoundSignal], func: Callable) -> None:
+    """
+    Helper to work around type checking not working with signal.connect(func).
+    
+    Based on aqt.qt, Copyright (C) 2020 Ankitects Pty Ltd and contributors
+    """
+    signal.connect(func)  # type: ignore[attr-defined, union-attr]

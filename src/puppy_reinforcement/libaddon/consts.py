@@ -37,7 +37,7 @@ from __future__ import (absolute_import, division,
                         print_function, unicode_literals)
 
 
-def setAddonProperties(addon):
+def set_addon_properties(addon):
     """Update ADDON class properties from another ADDON class
     
     Arguments:
@@ -49,8 +49,6 @@ def setAddonProperties(addon):
             # ignore special attributes
             continue
         setattr(ADDON, key, value)
-
-set_addon_properties = setAddonProperties
 
 class ADDON(object):
     """Class storing general add-on properties
