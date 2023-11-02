@@ -36,17 +36,24 @@ Customizable notification pop-up
 """
 
 
-from typing import Optional
-
-from PyQt5.QtCore import QPoint, Qt, QTimer
-from PyQt5.QtGui import QColor, QMouseEvent, QPalette, QResizeEvent
-from PyQt5.QtWidgets import QFrame, QLabel, QWidget
+from typing import Optional, cast
 
 from aqt.progress import ProgressManager
+from aqt.qt import (
+    QColor,
+    QFrame,
+    QLabel,
+    QMouseEvent,
+    QPalette,
+    QPoint,
+    QResizeEvent,
+    Qt,
+    QTimer,
+    QWidget,
+)
 
 
 class Notification(QLabel):
-
     _current_timer: Optional[QTimer] = None
     _current_instance: Optional["Notification"] = None
 
@@ -56,6 +63,7 @@ class Notification(QLabel):
         self,
         text: str,
         progress_manager: ProgressManager,
+        parent: QWidget,
         duration: int = 3000,
         align_horizontal: str = "left",
         align_vertical: str = "bottom",
@@ -63,7 +71,6 @@ class Notification(QLabel):
         space_vertical: int = 0,
         fg_color: str = "#000000",
         bg_color: str = "#FFFFFF",
-        parent: Optional[QWidget] = None,
         **kwargs,
     ):
         super().__init__(text, parent=parent, **kwargs)
@@ -73,12 +80,12 @@ class Notification(QLabel):
         self._align_vertical = align_vertical
         self._space_horizontal = space_horizontal
         self._space_vertical = space_vertical
-        self.setFrameStyle(QFrame.Panel)
+        self.setFrameStyle(QFrame.Shape.Panel)
         self.setLineWidth(2)
-        self.setWindowFlags(Qt.ToolTip)
+        self.setWindowFlags(Qt.WindowType.ToolTip)
         palette = QPalette()
-        palette.setColor(QPalette.Window, QColor(bg_color))
-        palette.setColor(QPalette.WindowText, QColor(fg_color))
+        palette.setColor(QPalette.ColorRole.Window, QColor(bg_color))
+        palette.setColor(QPalette.ColorRole.WindowText, QColor(fg_color))
         self.setPalette(palette)
 
     def show(self) -> None:
@@ -103,27 +110,30 @@ class Notification(QLabel):
         align_horizontal = self._align_horizontal
         align_vertical = self._align_vertical
 
+        parent = self._parent()
+
         if align_horizontal == "left":
-            x = 0 + self._space_horizontal
+            x: float = 0 + self._space_horizontal
         elif align_horizontal == "right":
-            x = self.parent().width() - self.width() - self._space_horizontal
+            x = parent.width() - self.width() - self._space_horizontal
         elif align_horizontal == "center":
-            x = (self.parent().width() - self.width()) / 2
+            x = (parent.width() - self.width()) / 2
         else:
             raise ValueError(f"Alignment value {align_horizontal} is not supported")
 
         if align_vertical == "top":
-            y = 0 + self._space_vertical
+            y: float = 0 + self._space_vertical
         elif align_vertical == "bottom":
-            y = self.parent().height() - self.height() - self._space_vertical
+            y = parent.height() - self.height() - self._space_vertical
         elif align_vertical == "center":
-            y = (self.parent().height() - self.height()) / 2
+            y = (parent.height() - self.height()) / 2
         else:
             raise ValueError(f"Alignment value {align_vertical} is not supported")
 
-        self.move(
-            self.parent().mapToGlobal(QPoint(x, y))
-        )
+        self.move(parent.mapToGlobal(QPoint(x, y)))
+
+    def _parent(self) -> QWidget:  # pyqt stubs workaround
+        return cast(QWidget, self.parent())
 
     @classmethod
     def _close_singleton(cls):

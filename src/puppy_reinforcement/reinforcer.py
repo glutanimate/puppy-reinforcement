@@ -105,12 +105,12 @@ class PuppyReinforcer:
             html,
             self._mw.progress,
             duration=local_config["duration"],
+            parent=self._mw.app.activeWindow() or self._mw,
             align_horizontal=local_config["tooltip_align_horizontal"],
             align_vertical=local_config["tooltip_align_vertical"],
             space_horizontal=local_config["tooltip_space_horizontal"],
             space_vertical=local_config["tooltip_space_vertical"],
             bg_color=local_config["tooltip_color"],
-            parent=self._mw.app.activeWindow() or self._mw,
         )
 
         notification.show()
