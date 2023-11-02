@@ -97,7 +97,7 @@ Contributions are welcome! Please review the [contribution guidelines](./CONTRIB
 
 ### License and Credits
 
-*Puppy Reinforcement* is *Copyright © 2016-2020 [Aristotelis P.](https://glutanimate.com/) (Glutanimate)*
+*Puppy Reinforcement* is *Copyright © 2016-2023 [Aristotelis P.](https://glutanimate.com/) (Glutanimate)*
 
 With code contributions from: [@zjosua](https://github.com/zjosua) (thanks!)
 

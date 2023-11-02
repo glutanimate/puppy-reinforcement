@@ -2,7 +2,7 @@
 
 # Puppy Reinforcement Add-on for Anki
 #
-# Copyright (C) 2016-2020  Aristotelis P. <https://glutanimate.com/>
+# Copyright (C) 2016-2023  Aristotelis P. <https://glutanimate.com/>
 # Copyright (C) 2019-2020  zjosua <https://github.com/zjosua>
 #
 # This program is free software: you can redistribute it and/or modify

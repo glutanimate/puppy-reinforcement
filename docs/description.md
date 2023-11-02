@@ -41,7 +41,7 @@ You can enable the add-on for adding cards by heading to the add-on's configurat
 ### CREDITS AND LICENSE
 
 *Copyright © 2015 [mbertolacci](https://github.com/mbertolacci)*
-*Copyright © 2016-2020 [Aristotelis P.](https://glutanimate.com/)  (Glutanimate)*
+*Copyright © 2016-2023 [Aristotelis P.](https://glutanimate.com/)  (Glutanimate)*
 
 With code contributions from: zjosua
 
