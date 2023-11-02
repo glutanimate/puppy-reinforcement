@@ -152,9 +152,13 @@ class PuppyReinforcer:
         self._state["cutoff"] = cutoff
 
     def _get_day_cutoff(self) -> Optional[int]:
-        # being defensive against intermittent null state on mw.col
+        if (collection := self._mw.col) is None:
+            return None
+        scheduler = collection.sched
+        if hasattr(scheduler, "day_cutoff"):
+            return scheduler.day_cutoff  # 2.1.54+
         try:
-            return self._mw.col.sched.dayCutoff
+            return scheduler.dayCutoff  # type: ignore[union-attr]
         except AttributeError:
             return None
 
