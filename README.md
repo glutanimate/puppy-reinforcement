@@ -43,33 +43,22 @@ The easiest way to install Puppy Reinforcement is through [AnkiWeb](https://anki
 
 #### Manual installation <!-- omit in toc -->
 
-Please click on the entry corresponding to your Anki version:
+1. Download the latest `.ankiaddon` file from the [releases tab](https://github.com/glutanimate/puppy-reinforcement/releases) (you might need to click on *Assets* below the description to reveal the download links)
+2. Open the folder where your downloads are located and double-click on the downloaded `.ankiaddon` file.
+3. Follow the installation prompt and restart Anki if it asks you to
 
 <details>
 
-<summary><i>Anki 2.1</i></summary>
+<summary><i>Alternate option</i></summary>
 
-1. Make sure you have the [latest version](https://apps.ankiweb.net/#download) of Anki 2.1 installed. Earlier releases (e.g. found in various Linux distros) do not support `.ankiaddon` packages.
-2. Download the latest `.ankiaddon` package from the [releases tab](https://github.com/glutanimate/puppy-reinforcement/releases) (you might need to click on *Assets* below the description to reveal the download links)
-3. From Anki's main window, head to *Tools* → *Add-ons*
-4. Drag-and-drop the `.ankiaddon` package onto the add-ons list
-5. Restart Anki
+1. Download the latest `.ankiaddon` package from the [releases tab](https://github.com/glutanimate/puppy-reinforcement/releases) (you might need to click on *Assets* below the description to reveal the download links)
+2. From Anki's main window, head to *Tools* → *Add-ons*
+3. Drag-and-drop the `.ankiaddon` package onto the add-ons list
+4. Restart Anki
 
-</details>
+Video summary:
 
-<details>
-
-<summary><i>Anki 2.0</i></summary>
-
-1. Go to *Tools* → *Add-ons* → *Open add-ons folder*
-2. Find and delete the `Puppy Reinforcement.py` file if it already exists.
-3. See if you can find a `puppy_reinforcement` folder. If so:
-    1. If the folder contains a `meta.json` file, copy the file to a safe location. This will allow you to preserve your current settings.
-    2. Proceed to delete the `puppy_reinforcement` folder
-4. Download and extract the latest Anki 2.0 add-on release from the [releases tab](https://github.com/glutanimate/puppy-reinforcement/releases) (you might need to click on *Assets* below the description to reveal the download links)
-5. Move the extracted `Puppy Reinforcement.py` and `puppy_reinforcement` into the add-ons folder
-6. Optional: Place the `meta.json` file back into the directory if you created a copy beforehand.
-7. Restart Anki
+<img src="https://raw.githubusercontent.com/glutanimate/docs/master/anki/add-ons/media/ankiaddon-installation-macos.gif" width=640>
 
 </details>
 
@@ -110,6 +99,5 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 ----
 
 <b>
-<div align="center">The continued development of this add-on is made possible <br>thanks to my <a href="https://www.patreon.com/glutanimate">Patreon</a> and <a href="https://ko-fi.com/X8X0L4YV">Ko-Fi</a> supporters.
-<br>You guys rock ❤️ !</div>
+<div align="center">The continued development of this add-on is made possible <br>thanks to my <a href="https://www.patreon.com/glutanimate">Patreon</a>  supporters. You guys rock ❤️ !</div>
 </b>
