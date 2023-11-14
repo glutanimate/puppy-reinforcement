@@ -18,6 +18,7 @@ If you enjoy Puppy Reinforcement, please consider supporting my work on Patreon,
 
 ### Added
 
+- Added support for Anki 23.10+
 - The tooltip position is now fully customizable, both horizontally and vertically (thanks to eotini23 on Patreon for the idea!)
 - Add option to disable tooltips while reviewing cards (thanks to Jamie on Patreon for the idea!)
 - Add option to reset the counter once a new day starts (thanks to p4nix on Patreon for the idea!)
