@@ -94,7 +94,7 @@ class Notification(QLabel):
         super().show()
         Notification._current_instance = self
         Notification._current_timer = self._progress_manager.timer(
-            3000, Notification._close_singleton, False
+            3000, Notification._close_singleton, False, parent=self.parent()
         )
 
     def mousePressEvent(self, evt: QMouseEvent):
