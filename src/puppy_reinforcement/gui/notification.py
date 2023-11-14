@@ -131,6 +131,10 @@ class Notification(QLabel):
             raise ValueError(f"Alignment value {align_vertical} is not supported")
 
         self.move(parent.mapToGlobal(QPoint(int(x), int(y))))
+        # Workaround for tooltips appearing squashed on Qt 6.6:
+        self.setMinimumWidth(self.width())
+        self.setMinimumHeight(self.height())
+        self.update()
 
     def _parent(self) -> QWidget:  # pyqt stubs workaround
         return cast(QWidget, self.parent())
