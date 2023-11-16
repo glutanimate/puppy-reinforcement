@@ -128,6 +128,8 @@ It took them a while to waddle up the version steps with their tiny legs, but yo
 - Initial release of Puppy Reinforcement
 
 [Unreleased]: https://github.com/glutanimate/puppy-reinforcement/compare/v1.0.0...HEAD
+[1.1.1]: https://github.com/glutanimate/puppy-reinforcement/compare/v1.1.0...v1.1.1
+[1.1.0]: https://github.com/glutanimate/puppy-reinforcement/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/glutanimate/puppy-reinforcement/compare/v1.0.0-beta.2...v1.0.0
 [1.0.0-beta.2]: https://github.com/glutanimate/puppy-reinforcement/compare/v1.0.0-beta.1...v1.0.0-beta.2
 [1.0.0-beta.1]: https://github.com/glutanimate/puppy-reinforcement/compare/v0.2.0-alpha.1...v1.0.0-beta.1
