@@ -12,6 +12,10 @@ If you enjoy Puppy Reinforcement, please consider supporting my work on Patreon,
 
 ## [Unreleased]
 
+### Fixed
+
+- Fixed a compatibility issue with Anki 2.1.49
+
 ## [1.1.0] - 2023-11-14
 
 ### [Download](https://github.com/glutanimate/puppy-reinforcement/releases/tag/v1.1.0)
