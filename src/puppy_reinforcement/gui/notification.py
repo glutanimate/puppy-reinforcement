@@ -97,11 +97,11 @@ class Notification(QLabel):
         Notification._current_instance = self
         if is_anki_version_in_range("2.1.54"):
             Notification._current_timer = self._progress_manager.timer(
-                3000, Notification._close_singleton, False, parent=self.parent()
+                self._duration, Notification._close_singleton, False, parent=self.parent()
             )
         else:
             Notification._current_timer = self._progress_manager.timer(
-                3000, Notification._close_singleton, False
+                self._duration, Notification._close_singleton, False
             )
 
     def mousePressEvent(self, evt: QMouseEvent):
