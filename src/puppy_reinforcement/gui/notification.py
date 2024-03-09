@@ -37,6 +37,7 @@ Customizable notification pop-up
 
 
 from typing import Optional, cast
+from aqt import QRect
 
 from aqt.progress import ProgressManager
 from aqt.qt import (
@@ -50,6 +51,9 @@ from aqt.qt import (
     Qt,
     QTimer,
     QWidget,
+    QMovie,
+    QHBoxLayout,
+    QPixmap,
 )
 
 from ..libaddon.platform import is_anki_version_in_range
@@ -64,6 +68,8 @@ class Notification(QLabel):
     def __init__(
         self,
         text: str,
+        media_path: str,
+        media_height: str,
         progress_manager: ProgressManager,
         parent: QWidget,
         duration: int = 3000,
@@ -75,7 +81,37 @@ class Notification(QLabel):
         bg_color: str = "#FFFFFF",
         **kwargs,
     ):
-        super().__init__(text, parent=parent, **kwargs)
+        super().__init__("", parent=parent, **kwargs)
+        self._media_height = int(media_height)
+        # instead of using table, use HBoxLayout with two labels side by side
+        self.setLayout(QHBoxLayout())
+
+        # only supported movie type is gif, QMovie could allow supporting others
+        if any([media_path.endswith(file_ext) for file_ext in [".gif"]]):
+            movie = QMovie(media_path)
+            self._movie_label = QLabel()
+            self._movie_label.setMovie(movie)
+            movie.updated.connect(self.movieFirstUpdateEvent)
+            movie.start()
+            movie.stop() # force QMovie to fire update signal after initializing
+            movie.start()
+            self.layout().addWidget(self._movie_label)
+        else: # it is a picture (must be, since match extensions to pick files)
+            self._picture_label = QLabel()
+            self._picture_label.setPixmap(
+                QPixmap(media_path).scaledToHeight(
+                    self._media_height,
+                    # bilinear filtering instead of default FastTransformation
+                    # which has no filtering causing aliasing (pixelly images)
+                    Qt.TransformationMode.SmoothTransformation
+                )
+            )
+            self.layout().addWidget(self._picture_label)
+
+        self.layout().addSpacing(5) # mimic the table's cell padding
+        message = QLabel(text)
+        self.layout().addWidget(message)
+
         self._progress_manager = progress_manager
         self._duration = duration
         self._align_horizontal = align_horizontal
@@ -89,6 +125,24 @@ class Notification(QLabel):
         palette.setColor(QPalette.ColorRole.Window, QColor(bg_color))
         palette.setColor(QPalette.ColorRole.WindowText, QColor(fg_color))
         self.setPalette(palette)
+        message.setPalette(palette)
+
+    def movieFirstUpdateEvent(self, rect: QRect):
+        # slot for first update of movie, which happens when it is started and
+        # stopped. must react to its first update because Qt doesn't know the
+        # movie's dimensions before that, so we can't get proper scaling info
+        # unless we were to parse it out of the file manually (more complicated)
+        size = rect.size()
+        # no limit on width, this will let wider images spill out of the square
+        # of "image_height" x "image_height"
+        # if it ever becomes possible for user to specify width, switch to
+        # using KeepAspectRatio instead of KeepAspectRatioByExpanding
+        size.scale(self._media_height, self._media_height,
+                   Qt.AspectRatioMode.KeepAspectRatioByExpanding)
+        self._movie_label.movie().setScaledSize(size)
+
+        # resize only once, so disconnect so this isn't called again
+        self._movie_label.movie().updated.disconnect(self.movieFirstUpdateEvent)
 
     def show(self) -> None:
         # TODO: drop dependency on mw

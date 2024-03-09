@@ -86,23 +86,16 @@ class PuppyReinforcer:
         )
         self._state["last"] = self._state["cnt"]
 
-    def _show_tooltip(self, encouragement: str, image_path: str):
+    def _show_tooltip(self, encouragement: str, media_path: str):
         local_config = self._config["local"]
         count = self._state["cnt"]
 
-        html = f"""\
-<table cellpadding=10>
-<tr>
-<td><img height={local_config["image_height"]} src="{image_path}"></td>
-<td valign="middle">
-    <center><b>{count} {'cards' if count > 1 else 'card'} done so far!</b><br>
-    {encouragement}</center>
-</td>
-</tr>
-</table>"""
+        text = f"<b>{count} {'cards' if count > 1 else 'card'} done so far!</b><br>{encouragement}"
 
         notification = Notification(
-            html,
+            text,
+            media_path,
+            local_config["image_height"],
             self._mw.progress,
             duration=local_config["duration"],
             parent=self._mw.app.activeWindow() or self._mw,
